@@ -8,6 +8,7 @@
 \usepackage{amsthm}
 \usepackage{fancyhdr}
 \usepackage{siunitx}
+\usepackage{physics}
 
 \usepackage{hyperref}
 
@@ -305,54 +306,160 @@ On a aussi définit les paramètres physique suivants (\cite{Wesson1991}):
 %L'approximation $w\simeq 0$ (équation d'état) est assez bonne pour les résultats de Planck.
 
 \subsection{Discussion}
+On observe que les longueur d'onde plus énergétique ont un redshift médian beaucoup plus petit que les 
+longueurs d'ondes plus rouge. De ce fait, une grande partie des emissions dans l'infrarouge 
+proviennent du jeune Univers, ce qui est confirmé par les observations (CMB).
 
-
+Les approximations utilisées sont les suivantes:
+\begin{enumerate}
+        \item On suppose que chaque objets est un corps noir
+        \item On suppose que la température moyenne $T_0$ de chaque objet est constante 
+                en fonction du redshift (ce qui n'est pas cohérent avec les modèles d'évolution 
+                des étoiles).
+        \item On a supposé un univers plat, ce qui n'est pas nécessairement le cas
+        \item Notre calcul dépend de la cosmologie choisie, de façon plus importante pour 
+                les redshift médian dans l'infrarouge. On a donc supposé que les trois cosmologies 
+                choisies étaient de bon candidat pour comparer avec les observations.
+        
+\end{enumerate}
 
 
 
 \section{Homogénéité de l'Univers}
-On considère un échantillon de galaxies du sondage BOSS  dans un cône:
+On considère un échantillon de galaxies du sondage BOSS dans le cône:
 \begin{enumerate}
-        \item $0.001 \leq z \leq 0.4$
+        \item $0.0001 \leq z \leq 1$
         \item $156^{\circ} \leq \text{ra} \leq 160^{\circ}$
         \item $27^{\circ} \leq \text{dec} \leq 33^{\circ}$
 \end{enumerate}
-Notre échantillon contient $N_\text{gal} = ?$ galaxies
+Ceci équivaut à plus de 15,000 galaxies, dispersés de façon inégale selon le redshift.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{redshift_dist}
+        \caption{}
+        \label{fig:RedshiftDist}
+\end{figure}
+On tient compte de cette distribution en ajustant un Kernel Density Estimator gaussien
+sur le distribution. Ainsi, on peut associer un poids à chaque galaxie selon son redshift:
+\begin{equation}\label{eq:poids} 
+        w(z) = \frac{(P_{\text{KDE}}(z))^{-1}}{\displaystyle\int_0^{1}(P_\text{KDE}(z))^{-1}}
+\end{equation} 
 
 
 \subsection{Nombre de voisins dans une sphère de rayon $r$}
 Une première approche pour modéliser l'excès de la densité numérique par rapport à 
-un processus de Poisson est de moyenner le nombre de voisins d'une galaxie dans une 
+un processus de Poisson est de moyenner sur chaque galaxie 
+le nombre de voisins trouvés dans une 
 sphère de rayon $r$. Le comportement attendu est que le nombre de galaxie augmente selon 
 $r^3$ pour un processus de Poisson. Ainsi, une mesure d'homogénéité est 
 \[
-        \eta(< r) + 1 = \frac{\langle N_{\text{échantillon}}(<r)\rangle}{
-        \langle N_{\text{synthétique}}(<r)\rangle}
+        \mathcal{N}(< r) = \frac{\langle N_{\text{D}}(<r)\rangle_w}{
+        \langle N_{\text{R}}(<r)\rangle}
 \]
-où $N_{\text{synthétique}}(<r)$ est le nombre de voisins dans un catalogue synthétique 
-avec une distribution de densité uniforme. $\eta(<r) \rightarrow 0$ lorsque la distribution 
-devient homogène à l'échelle sondée. La moyenne est pesée pour tenir compte du bruit de 
-Poisson.
-%En principe, la densité devrait converger vers la densité 
-%moyenne de l'échantillon $\bar{n}$ lorsque l'échelle $r$ est suffisamment grande pour que les 
-%effets d'agglomérations aux plus petites échelles soient marginalisés dans la moyenne. 
-%Autrement dit, la résolution diminue aux grandes échelles et 
-%les points à l'intérieur d'une agglomération se confondent. La distribution de densité 
-%des agglomération 
-%est quant à elle uniforme, d'où le processus de Poisson.
+ou l'indice $w$ indique la moyenne pesée avec les poids normalisés de l'équation 
+\eqref{eq:poids} et 
+où $N_{\text{R}}(<r)$ est le nombre de voisins dans un catalogue synthétique 
+avec une distribution de densité uniforme. On s'attend à ce que 
+$\mathcal{N}(<r) \rightarrow 1$ lorsque la distribution 
+devient homogène à l'échelle sondée.
+
+Pour déterminer la distance comobile $r$ (on suppose un Univers de courbure nulle), on utiliser 
+la cosmologie $\Lambda \text{CDM}$ avec les résultats de la collaboration Planck (table \ref{tab:LCDMparam}).
 
 
-\subsection{Fonction d'autocovariance $\xi(r)$}
+Pour améliorer la confiance du calcul, on crée 100 catalogues synthétiques pour obtenir 
+des statistiques sur $\mathcal{N}(<r)$. Finalement, chaque réalisation du calcul est obtenu 
+à l'aide de 5000 galaxies choisies aléatoirement du catalogue.
 
-On définit la fonction d'autocovariance $\xi(r)$ comme l'amplitude de la tendance 
-aux galaxies de s'agglomérer:
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{coorelation_count-in-sphere}
+        \caption{100 réalisations du compte de nombre de voisins pour 5000 objets 
+        sélectionnés du catalogue}
+        \label{fig:CountInSphere}
+\end{figure}
+
+\subsection{Fonction de covariance $\xi(r)$}
+
+On définit la fonction d'covariance $\xi(r)$ comme l'amplitude de la tendance 
+aux galaxies de s'agglomérer \cite{Peebles1980}:
 \[
         dP = \bar{n} (1 + \xi(r)) dV
 \]
 où $dP$ mesure la probabilité de trouvé un voisin à une distance $r$ dans un un volume $dV$. 
 Ainsi, $\xi(r)$ mesure l'excès de probabilité par rapport à un processus de Poisson (où 
-la probabilité est fixe $dP^{\text{Poisson}} = \bar{n}dV$). 
+la probabilité est fixe $dP_{\text{Poisson}} = \bar{n}dV$). En pratique, on peut définir 
+l'estimateur de Davis et Peebles basé sur l'histogramme des distances de chaque paires \cite{Davis1983}:
+\begin{equation}\label{eq:DavisPeebles} 
+        \hat{\xi}_{DP}(r) + 1 = \frac{\bar{n}_R}{\bar{n}_D}\frac{\langle N_{\text{D}}(r) \rangle_w}{
+        \langle N_{\text{R}}(r) \rangle}
+\end{equation} 
+où $N_{\text{D}}$ est le nombre de voisins d'une galaxie dans une coquille à un rayon $r$ 
+d'épaisseur $dr$. Certains estimateur ont été introduis avec une erreur statistique plus 
+basse. On définit ainsi l'estimateur d'Hamilton \cite{Hamilton1983}:
+\begin{equation}\label{eq:Hamilton} 
+        \hat{\xi}_H(r) + 1 =  \frac{\expval{N_D(r)}_w \expval{N_R(r)}}{\expval{N_{DR}(r)}^2}
+\end{equation} 
+où $N_{DR}$ est l'histogramme des distances entre les deux catalogues. Finalement, 
+on introduit l'estimateur de Landy-Szalay \cite{Landy1993}
+\begin{equation}\label{eq:Landy} 
+        \hat{\xi}_{LS}(r) + 1 = \frac{1}{\expval{N_R}} \left[ 
+                \expval{N_D}_w \left( \frac{\bar{n}_R}{\bar{n}_D} \right)^{2}
+                - 2 \expval{N_{DR}} \left( \frac{\bar{n}_R}{\bar{n}_D} \right)
+                + \expval{N_R}
+        \right] 
+\end{equation} 
 
+
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}[t]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{coorelation_Hamilton}
+                \caption{100 réalisations de la formule \eqref{eq:Hamilton} pour 5000 objets.}
+                \label{fig:Hamilton}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[t]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{coorelation_Peebles-Davis}
+                \caption{100 réalisations de la formule \eqref{eq:DavisPeebles} pour 5000 objets.}
+                \label{fig:Peebles}
+        \end{subfigure}
+        ~
+       \begin{subfigure}[t]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{coorelation_Landy-Szalay}
+                \caption{100 réalisations de la formule \eqref{eq:Landy} pour 5000 objets.}
+                \label{fig:Landy}
+        \end{subfigure}
+
+\end{figure}
+
+
+\subsection{Discussion}
+\subsubsection{Résultats}
+L'Univers devient homogène lorsque la fonction de covariance tend vers 0. Selon nos trois estimateurs, 
+ceci survient autour de 
+\[
+        \boxed{r \sim 200\, \text{Mpc}}
+\]
+qui est la moyenne l'estimé provenant du compte de voisins et les fonctions de covariances (qui predisent 
+autour de $r \sim 100\, \text{Mps}$).
+
+\subsubsection{Biais}
+\begin{enumerate}
+        \item On assume une cosmologie avec courbure nulle;
+        \item On assume le modèle $\Lambda \text{CDM}$, donc l'échelle de distance dépend de notre choix pour $h$ et 
+                le paramètres de densité $\Omega_{0m}$;
+        \item Notre estimateur dépend fortement de la qualité des catalogues synthétiques, donc le nombre de points utilisés 
+                dans le catalogue influence le bruit intrinsèque (de Poisson) dans chaque bin de l'histogramme;
+        \item Une source de bruit importante pour le redshift est la vitesse propre des galaxies, et ce bruit n'est 
+                pas pris en compte dans notre analyse;
+        \item Notre analyse suppose que l'Univers est \textit{statique}, en ce sens qu'on ne suppose pas de modèle 
+                d'évolution des galaxies en fonction du redshift. Une analyse plus poussée devrais prendre en 
+                compte cette distribution pour isoler 
+                la correlation spatial des galaxies.
+\end{enumerate}
+Notons que notre analyse n'est pas influencée par la fenêtre de sélection du catalogue puisque le catalogue synthétique 
+possède la même fenêtre de sélection.
 
 
 
@@ -452,20 +559,21 @@ Le rayon de Schwarzschild est donc:
 \[
         r_s \equiv \frac{2 G M}{c^2} =  R_H
 \]
-%\[
-        %r_{\text{s}} \equiv \frac{2GM}{c^2} \simeq
-%\]
-%Pour être cohérent , nous devons toutefois utiliser la métrique de Schwarzschild. Ainsi,
-%\[
-        %R_H^{\text{Sc}} = \int_0^{R_H} \frac{ds}{1 - }
-%\]
-%Pour calculer le rayon de Schwarzschild de l'Univers visible, on doit d'abord estimer la masse 
-%de l'Univers visible. Le paramètre de Hubble nous donne un estimé de la taille de l'Univers. 
-%On peut estimer l'horizon comobile (distance hypothétiquement voyagé par un rayon 
-%lumineux depuis le début de l'Univers) en utilisant la constante de Hubble mesurée aujourd'hui
-%\[
-        %\xi = \int_{t_i}^{t_0} c \frac{dt'}{a(t')}
-%\]
+
+\subsection{Horizon}
+On suppose que le tenseur de stress-énergie tombe à zéro à l'extérieur de l'horizon cosmique.
+En principe, ceci implique qu'un élément de matière test ressent une force d'attraction gravitationnelle 
+seulement vers la direction intérieur de l'Univers (vers le centre de l'Univers, qui se situe à la 
+position de l'observateur $\mathcal{O}$ dans notre expérience de pensée). Ainsi, on s'attendrait 
+à voir le redshift de ces galaxies vers le bleu plutôt que le rouge. Il est évident que ce 
+n'est pas ce qu'on observe.
+
+\subsection{Différentes cosmologie}
+Le rayon de Schwarzschild dépend de la cosmologie choisie. Dans un espace courbe, le paramètre de densité 
+critique $\Omega_0 \not= 1$. Ainsi, lorsque $k > 1$, $\Omega_0 > 1$ et le rayon de Schwarzschild est généralement 
+plus grand que le rayon cosmique. De la même façon, un univers ouvert aura un rayon de Schwarzschild plus 
+petit que le rayon cosmique.
+
 
 
 \section{La métrique}
@@ -517,69 +625,160 @@ Dans la perspective de cet univers, le rapport circonférence sur le rayon suit 
                 \mathcal{O}\left(\frac{(R - R^{*})^{5}}{|R - R^{*}|}\right) \right),
 \]
 
-Donc, la réponse est oui, il est parfaitement légitime de redéfinir $\pi = 3$ dans un 
+Donc, la réponse est oui, de façon pratique on peut redéfinir $\pi = 3$ dans un 
 univers fermé (de courbure positive) en utilisant un cercle de référence avec un rayon 
-de coordonnée affine $R^{*} \simeq 0.532$.
+de coordonnée affine $R^{*} \simeq 0.532$. Ceci est en définissant $\pi$ comme la moitié 
+du ratio circonférence-rayon.
 
 Toutefois, \textbf{il n'existe pas d'univers où le ratio circonférence sur rayon est constant 
 où} $\pi \not= 3.14159...$. Le ratio est constant seulement dans un univers Euclidien où 
 $\pi$ ne peut pas prendre une valeur différente de celle connue. C'est à dire que 
 \[
-        \pi \equiv \frac{1}{2}\int_{-1}^1 \frac{d\xi}{\sqrt{1 - \xi^2}}
+        \pi \equiv \int_{-1}^1 \frac{d\xi}{\sqrt{1 - \xi^2}}
 \]
 qui est basé sur la métrique $ds^2 = dx^2 + dy^2$ 
 avec la condition $x^2 + y^2 = 1$. En ce sens, la valeur de la constante $\pi$ ne peut pas être 
-changé en ce sens qu'elle est une construction théorique liée à un espace Euclidien.
+changé puisque $\pi$ est une construction théorique liée à un espace Euclidien.
 
-\subsection{\textit{Hartle}, exercice 2, ch. 2}
-Supposant que l'on puisse se situer sur la surface du Soleil et qu'on répéter l'expérience 
-de Gauss pour mesurer les angles d'un triangle. La différence entre la somme des angles 
-mesurées $\sum \alpha_i$ et la somme attendu pour un espace Euclidien $\pi$ est 
-\[
-        \sum \alpha_i - \pi \simeq \frac{A_{\triangle}}{R_\odot^{2}} 
-        \left( \frac{GM_\odot}{R_\odot c^2} \right)
-\]
-Le premier facteur est un effet purement géométrique (le Soleil est une sphère en première 
-approximation), alors que le second facteur est une correction approtée par la relativité générale.
 
-En supposant qu'on répète l'expérience de Gauss, on mesure l'angle du triangle entre les monts 
-Brocken, Hohenhagen et Inselberg. Les distances entre ces montagnes sont $69\, \text{km}$, 
-$85\, \text{km}$ et $107\, \text{km}$. En utilisant la formule de Héron, 
+\subsection{\textit{Doddleson}, Ch. 2, P2}
+On considère un espace Euclidienne avec des coordonnées polaires
 \[
-        A_\triangle \simeq 2929\, \text{km}^2
-\]
-De sortes que
-\[
-        \frac{A_\triangle}{R^2} \simeq 
-\left\{ 
+        g_{ij} =  
+        \left( 
 \begin{matrix}
-        6.05 \times 10^{-9}, & R_\odot \\
-        7.20 \times 10^{-5}, & R_\oplus
+        1 & 0 \\ 
+        0 & r^2
 \end{matrix}
-\right.
+        \right)
 \]
-et
+où $i,j\, \in \, (r, \theta)$.
+\subsubsection{Symboles de Christoffel}
+Par définition
 \[
-        \frac{GM_\odot}{c^2R_\odot} \simeq 
-\left\{ 
-\begin{matrix}
-        2.12 \times 10^{-6}, & R_\odot \\
-        6.95 \times 10^{-10}, & R_\oplus
-\end{matrix}
-\right.
+        \Gamma_{\alpha \beta \gamma} = \frac{1}{2} \left( 
+                \frac{\partial g_{\alpha \beta}}{\partial x^{\gamma}}
+                - \frac{\partial g_{\beta \gamma}}{\partial x^{\alpha}}
+                + \frac{\partial g_{\alpha \gamma}}{\partial x^{\beta}}
+        \right)
 \]
-Pour une déviation égale à
+Les symétries $\Gamma_{\alpha \beta \gamma} = \Gamma_{\alpha \gamma \beta}$ et 
+$\Gamma_{\alpha \beta \gamma} = - \Gamma_{\beta \alpha \gamma} = - \Gamma_{\gamma \alpha \beta}$ 
+sont immédiatement apparentes. Notons que la seule dérivée non-nul est 
 \[
-        \sum \alpha_i - \pi \simeq 
-\left\{ 
-\begin{matrix}
-        1.29 \times 10^{-14}, & R_\odot \\ 
-        5.01 \times 10^{-14}, & R_\oplus
-\end{matrix}
-\right.
+        g_{\theta \theta ;r} = 2r
 \]
-On remarque que dans les deux cas, la déviation est similaire mais la source de cette déviation 
-est différente. Pour le Soleil, l'effet gravitationnel est beaucoup plus important que l'effet géométrique.
+De sortes que les seuls symboles de Christoffel non-nuls sont
+\[
+       \boxed{\Gamma^{\theta}_{\theta r} =  \Gamma^{\theta}_{r \theta} = 
+       \frac{g^{\theta \theta}}{2} g_{\theta \theta ;r} = \frac{1}{r}}
+\]
+En utilisant la propriété d'antisymmétrie du coefficient complètement covariant, on trouve aussi
+\[
+        \boxed{\Gamma^{r}_{\theta \theta} = -g^{rr}\Gamma_{\theta \theta r} = -r}
+\]
+\subsubsection{Géodésiques}
+Il est aussi possible de trouver les symboles de Christoffel en développant les équations d'Euler-Lagrange 
+en terme de la coordonnée affine $\lambda$:
+\[
+        -\frac{d}{d\lambda} \left( \frac{\partial L}{\partial (dx^{\alpha} / d\lambda)} \right) 
+        + \frac{\partial L}{\partial x^{\alpha}} = 0
+\]
+où le Lagrangien est définit comme la dérivée de la coordonnée affine en fonction du temps propre 
+$\tau$:
+\[
+        L \left( x^{\alpha}, \frac{d x^{\alpha}}{d \lambda}  \right) = 
+        \frac{d \lambda}{d \tau} =  
+        \sqrt{ - g_{\alpha \beta } \frac{d x^{\alpha}}{d \lambda} \frac{d x^{\beta}}{d \lambda}  }
+        = \sqrt{-\left( \frac{d r}{d \lambda}  \right)^{2} 
+        - r^2 \left( \frac{d \theta}{d \lambda}  \right)^{2}}
+\]
+Ainsi,
+\begin{align*}
+        -\frac{d}{d\lambda} \left( \frac{\partial L}{\partial (dr / d\lambda)} \right)
+        &= \frac{d}{d\lambda}\left( \frac{1}{L}\frac{d r}{d \lambda}  \right)  
+        = \frac{1}{L}\frac{d }{d \tau} \left( \frac{d r}{d \tau}  \right) 
+        = \frac{1}{L} \frac{d^{2}r}{d \tau^2} 
+        \\
+        -\frac{d}{d\lambda} \left( \frac{\partial L}{\partial (d\theta / d\lambda)} \right) 
+        &= \frac{d }{d \lambda} \left( r^2\frac{d \theta}{d \tau}  \right)
+        = \frac{1}{L} \left[ 2r  \left( \frac{d r}{d \tau}  \right)\left( \frac{d\theta}{d\tau} \right) 
+        + r^2 \frac{d^{2}\theta}{d \tau}  \right]
+        \\
+        \frac{\partial L}{\partial r} 
+        &= -\frac{1}{L} r\left( \frac{d \theta}{d \lambda} \right)^{2}
+        \\
+        \frac{\partial L}{\partial \theta} &=  0
+\end{align*}
+Sachant que l'équation d'une géodésique doit s'écrire
+\[
+        \frac{d^{2} x^{\alpha}}{d\tau^2} = -\Gamma^{\alpha}_{\beta \gamma} \frac{d x^{\beta}}{d \tau} \frac{d x^{\gamma}}{d \tau}  
+\]
+Alors on simplifie les équations d'Euler-Lagrange pour isoler la seconde dérivée au côté 
+gauche. Pour la coordonnée $r$, on obtient (en simplifiant $1/L$)
+\[
+        \boxed{\frac{d^{2}r}{d \tau^{2}} = r\left( \frac{d\theta}{dr} \right)^{2}}
+\]
+Pour $\theta$:
+\[
+        \boxed{\frac{d^{2} \theta}{d \tau^{2}}  = -2 \left( \frac{1}{r} \right)\frac{d r}{d \tau} \frac{d \theta}{d \tau}  }
+\]
+On remarque qu'on obtient bien les coefficients de Christoffel de la section précédentes en tenant 
+compte du fait que le facteur 2 apparaissant devant $r^{-1}$ vient de la contribution de deux termes:
+$\Gamma^{\theta}_{r\theta}$ 
+et $\Gamma^{\theta}_{\theta r}$.
+
+
+
+%\subsection{\textit{Hartle}, exercice 2, ch. 2}
+%Supposant que l'on puisse se situer sur la surface du Soleil et qu'on répéter l'expérience 
+%de Gauss pour mesurer les angles d'un triangle. La différence entre la somme des angles 
+%mesurées $\sum \alpha_i$ et la somme attendu pour un espace Euclidien $\pi$ est 
+%\[
+        %\sum \alpha_i - \pi \simeq \frac{A_{\triangle}}{R_\odot^{2}} 
+        %\left( \frac{GM_\odot}{R_\odot c^2} \right)
+%\]
+%Le premier facteur est un effet purement géométrique (le Soleil est une sphère en première 
+%approximation), alors que le second facteur est une correction approtée par la relativité générale.
+
+%En supposant qu'on répète l'expérience de Gauss, on mesure l'angle du triangle entre les monts 
+%Brocken, Hohenhagen et Inselberg. Les distances entre ces montagnes sont $69\, \text{km}$, 
+%$85\, \text{km}$ et $107\, \text{km}$. En utilisant la formule de Héron, 
+%\[
+        %A_\triangle \simeq 2929\, \text{km}^2
+%\]
+%De sortes que
+%\[
+        %\frac{A_\triangle}{R^2} \simeq 
+%\left\{ 
+%\begin{matrix}
+        %6.05 \times 10^{-9}, & R_\odot \\
+        %7.20 \times 10^{-5}, & R_\oplus
+%\end{matrix}
+%\right.
+%\]
+%et
+%\[
+        %\frac{GM_\odot}{c^2R_\odot} \simeq 
+%\left\{ 
+%\begin{matrix}
+        %2.12 \times 10^{-6}, & R_\odot \\
+        %6.95 \times 10^{-10}, & R_\oplus
+%\end{matrix}
+%\right.
+%\]
+%Pour une déviation égale à
+%\[
+        %\sum \alpha_i - \pi \simeq 
+%\left\{ 
+%\begin{matrix}
+        %1.29 \times 10^{-14}, & R_\odot \\ 
+        %5.01 \times 10^{-14}, & R_\oplus
+%\end{matrix}
+%\right.
+%\]
+%On remarque que dans les deux cas, la déviation est similaire mais la source de cette déviation 
+%est différente. Pour le Soleil, l'effet gravitationnel est beaucoup plus important que l'effet géométrique.
 
 
 %\bliography{../bibfile}

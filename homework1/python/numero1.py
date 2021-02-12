@@ -71,6 +71,25 @@ def intensity_LCDM(z_f, omega_m, omega_L, omega_r, gamma):
     out = quad(integrand, 0, z_f)
     return out[0]
 
+# in construction, abandonned
+def bolometric_LCDM(z_f, omega_m, omega_L, omega_r):
+    gamma = lambda z, lam: (2 * pi * hbar * c / k_B / T(z) / lam * u.angstrom).decompose().value
+    beta = lambda lam: (epsilon_0 / (T_0**4 * (lam * u.angstrom**5 * H_0))).value
+
+    def integrand(z):
+        num = (1 + z)**2
+        term1 = omega_m * (1 + z)
+        term2 = omega_r * (1 + z)**2
+        term3 = omega_L * (1 + z)**(-2)
+        term4 = 1- omega_m - omega_L - omega_r
+        def integrand2(lam): 
+            factor1 = np.exp(gamma(z, lam) * (1 + z)) - 1
+            factor2 = term1 + term2 + term3 + term4
+            return beta(lam) * num / factor1 / factor2**(1/2)
+        return quad(integrand2, 0, np.inf)
+    return quad(integrand, 0, zf)
+
+
 
 # adaptive step method
 # @jit(nopython=True, parallel=True)
@@ -150,6 +169,15 @@ def z_median_all(n, M=M):
 
     return z_milne, z_einstein, z_LCDM
 
+def z_median_bolometrique(n, M=M):
+    T = lambda z: T_0 * (1 + z)**(n/4)
+    omega_m = 0.3089
+    omega_L = 0.679
+    omega_r = 0
+    # z_milne = np.zeros(M) 
+    # z_einstein = np.zeros(M)
+    z_LCDM = np.zeros(M)
+
 
 
 # Enstein-de Sitter universe
@@ -197,32 +225,4 @@ plt.xscale("log")
 plt.yscale("log")
 plt.legend()
 plt.savefig("../tex/figures/z_median_univers.png")
-
-# # lets consider evolution model for the temperature
-
-# z_milne, z_einstein, z_CDM = z_median_all(1)
-
-# plt.title(r"$T = (6000 K)(1 + z)^{1/4}")
-# plt.plot(lam, z_milne, "-k", label="Milne")
-# plt.plot(lam, z_einstein, "-r", label="Einstein-de Sitter")
-# plt.plot(lam, z_LCDM, "-g", label=r"$\Lambda$CDM")
-# plt.ylabel(r"$z_{\text{median}}$")
-# plt.xlabel(r"$\lambda_0$ [$\AA$]")
-# plt.yscale("log")
-# plt.xscale("log")
-# plt.legend()
-# plt.savefig("../tex/figures/z_median_univers1.png")
-
-# z_milne, z_einstein, z_CDM = z_median_all(2 )
-
-# plt.title(r"$T = (6000 K)(1 + z)^{1/2}")
-# plt.plot(lam, z_milne, "-k", label="Milne")
-# plt.plot(lam, z_einstein, "-r", label="Einstein-de Sitter")
-# plt.plot(lam, z_LCDM, "-g", label=r"$\Lambda$CDM")
-# plt.ylabel(r"$z_{\text{median}}$")
-# plt.xlabel(r"$\lambda_0$ [$\AA$]")
-# plt.xscale("log")
-# plt.yscale("log")
-# plt.legend()
-# plt.savefig("../tex/figures/z_median_univers2.png")
 
