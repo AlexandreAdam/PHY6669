@@ -152,29 +152,37 @@ La fonction de Schechter n'est valide que dans un interval de masses considéré
 inférieur choisie dans l'analyse de \cite{Conselice2016} est $M > 6$. Le meilleur fit sur les données 
 pour la densité numérique intégrée sur le profile de Schechter $\phi_T$
 \[
-        \phi_T(z) = \int_{M_1}^{M_2} \phi(M, z) dM
+        \phi_T(z) = \int_{M_1}^{M_2} \phi(M, z) dM \hspace{0.5cm} [\text{Mpc}^{-3}]
 \]
 est \cite{Conselice2016}
 \[
-        \log \phi_T(t) = (-1.08 \pm 0.20) \log(t) - 0.26 \pm 0.06
+        \log \phi_T(t) = (-1.08 \pm 0.20) \log \left( \frac{t}{1\, \text{Gyr}} \right) - 0.26 \pm 0.06
 \]
-De sortes que le nombre total de galaxies dans l'univers visible, 
+Ce résultat est un constat que le taux de production de galaxies est variable 
+en fonction du temps. En particulier, il est plus bas aujourd'hui qu'il ne l'était 
+à $z=6$.
+
+Le nombre total de galaxies dans l'univers visible, 
 en supposant un modèle d'évolution
-qui commence à $z = 6$ et la cosmologie du modèle $\Lambda \text{CDM}$ plat est
+qui commence à $z = 6$ et la cosmologie du modèle $\Lambda \text{CDM}$ plat, est 
+donc l'intégrale de la fonction du nombre de densité total multiplié par 
+le volume de l'univers visible en fonction du redshift $V_{\text{univers}}(z)$:
 \begin{equation}\label{eq:NtotGal} 
         N_{\text{tot}} = \frac{c}{H_0} \int_{z=0}^{6} 
-        \int_0^{4 \pi} \frac{(1 + z)^{2} D_A^{2}}{
-        \sqrt{\Omega_{0m}(1 + z)^{3} + \Omega_{0\Lambda}}}
+        \int_0^{4 \pi} 
+        \underbrace{\frac{(1 + z)^{2} D_A^{2}}{
+        \sqrt{\Omega_{0m}(1 + z)^{3} + \Omega_{0\Lambda}}}}_{
+\dfrac{\partial^{2} V_{\text{univers}}(z)}{\partial \Omega \partial z}}
         \phi_T(t(z)) d\Omega dz
 \end{equation} 
 où $D_A$ est la distance angulaire en fonction de $z$
 \begin{equation}\label{eq:DA} 
-        D_A = \frac{1}{1 + z} \frac{1}{H_0}\int_0^{z} \frac{dz'}{\sqrt{\Omega_{0m}(1 + z')^{3} 
+        D_A =  \frac{(1 + z)^{-1}}{H_0}\int_0^{z} \frac{dz'}{\sqrt{\Omega_{0m}(1 + z')^{3} 
         + \Omega_{0\Lambda}}}
 \end{equation} 
 et
 \begin{equation}\label{eq:t(z)} 
-        t(z) = \frac{1}{H_0}\int_\infty^{z} \frac{(1 + z')^{-1} dz'}{
+        t(z) = \frac{1}{H_0}\int_z^{\infty } \frac{(1 + z')^{-1} dz'}{
         \sqrt{\Omega_{0m}(1 + z')^{3} + \Omega_{0\Lambda}}}
 \end{equation} 
 Les paramètres du modèle cosmologique sont données dans la table suivante.
@@ -192,7 +200,7 @@ Les paramètres du modèle cosmologique sont données dans la table suivante.
 \end{table}
 Le résultat de l'équation \eqref{eq:NtotGal} est 
 \[
-        \boxed{N_{\text{tot}} = 6.750 \times 10^{11}\, \text{galaxies}}
+        \boxed{N_{\text{tot}} = (6 \pm 1) \times 10^{11}\, \text{galaxies}}
 \]
 En principe, il y a $N_{\text{tot}}$ galaxie observable dans l'univers visible.
 

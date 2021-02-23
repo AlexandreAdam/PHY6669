@@ -15,11 +15,11 @@ H0 = 70 * u.km / u.s / u.Mpc
 DIST = (c/H0).decompose().to(u.Mpc).value
 TIME = (1/H0).to(u.Gyr).value
 
-def logphi_T(t):
-    return A * np.log10(t) + B
+def logphi_T(t, a, b):
+    return a * np.log10(t) + b
 
-def phiT(t):
-    return 10**(logphi_T(t)) #/ u.Mpc**3
+def phiT(t, a, b):
+    return 10**(logphi_T(t, a, b)) #/ u.Mpc**3
 
 def H(z):
     return np.sqrt(Omega_m * (1 + z)**3 + Omega_L)
@@ -37,15 +37,23 @@ def DA(z):
 
 def Ntot(a, b):
     const = (4 * np.pi * c / H0) / u.Mpc
-    integrand = lambda z: (1 + z)**2 * DA(z)**2/H(z) * phiT(t(z))
-    out = quad(integrand, 0, 6)
-    print(out)
+    integrand = lambda z, a, b: (1 + z)**2 * DA(z)**2/H(z) * phiT(t(z), a, b)
+    out = quad(integrand, 0, 6, args=(a, b))
     return (const * out[0]).decompose()
 
-
-
 def main(args):
-    print(f"{Ntot(A, B):.3e}")
+    results = []
+    
+    results.append(Ntot(A, B))
+    results.append(Ntot(A + da, B + db))
+    results.append(Ntot(A - da, B - db))
+    # print(f"{Ntot(A + da, B - db):.3e}")
+    # print(f"{Ntot(A - da, B + db):.3e}")
+    results = np.array(results)
+    print(f"{results[0]:.3e}")
+    print(f"{results.std():.3e}")
+
+
 
 
 if __name__ == "__main__":
