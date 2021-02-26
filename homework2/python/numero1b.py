@@ -12,7 +12,7 @@ db = 0.06
 Omega_m = 0.30
 Omega_L = 0.70
 H0 = 70 * u.km / u.s / u.Mpc
-DIST = (c/H0).decompose().to(u.Mpc).value
+DIST = (c/H0).to(u.Mpc).value
 TIME = (1/H0).to(u.Gyr).value
 
 def logphi_T(t, a, b):
@@ -38,7 +38,7 @@ def DA(z):
 def Ntot(a, b):
     const = (4 * np.pi * c / H0) / u.Mpc
     integrand = lambda z, a, b: (1 + z)**2 * DA(z)**2/H(z) * phiT(t(z), a, b)
-    out = quad(integrand, 0, 6, args=(a, b))
+    out = quad(integrand, 0,6, args=(a, b))
     return (const * out[0]).decompose()
 
 def main(args):

@@ -61,6 +61,11 @@
 % Astronomy
 \DeclareSIUnit\parsec{pc}
 \DeclareSIUnit\lightyear{ly}
+%\usepackage[backend=bibtex,bibencoding=ascii,style=authoryear,sorting=none]{biblatex}
+%\usepackage{biblatex}
+%\addbibresource{bibfile.bib}
+
+
 
 \begin{document}
 \section{Les distances en cosmologie}
@@ -177,7 +182,7 @@ le volume de l'univers visible en fonction du redshift $V_{\text{univers}}(z)$:
 \end{equation} 
 où $D_A$ est la distance angulaire en fonction de $z$
 \begin{equation}\label{eq:DA} 
-        D_A =  \frac{(1 + z)^{-1}}{H_0}\int_0^{z} \frac{dz'}{\sqrt{\Omega_{0m}(1 + z')^{3} 
+        D_A(z) =  \frac{(1 + z)^{-1}}{H_0}\int_0^{z} \frac{dz'}{\sqrt{\Omega_{0m}(1 + z')^{3} 
         + \Omega_{0\Lambda}}}
 \end{equation} 
 et
@@ -191,7 +196,7 @@ Les paramètres du modèle cosmologique sont données dans la table suivante.
         \begin{tabular}{ccc}
                 \toprule
                 $h$ & $\Omega_{0m}$ & $\Omega_\Lambda$ \\
-                0.72 & 0.3 & 0.7 \\
+                0.7 & 0.3 & 0.7 \\
                 \bottomrule
                 
         \end{tabular}
@@ -202,7 +207,7 @@ Le résultat de l'équation \eqref{eq:NtotGal} est
 \[
         \boxed{N_{\text{tot}} = (6 \pm 1) \times 10^{11}\, \text{galaxies}}
 \]
-En principe, il y a $N_{\text{tot}}$ galaxie observable dans l'univers visible.
+%En principe, il y a $N_{\text{tot}}$ galaxie observable dans l'univers visible.
 
 
 \section{L'horizon}
@@ -215,7 +220,7 @@ $(c = 1)$. La distance comobile entre deux points est définie comme
         \chi(a) = \int_a^{1} \frac{da'}{a'^2 H(a')}
 \]
 
-\subsection{}
+\subsection{}\label{sec:2a}
 On cherche le redshift à partir duquel un miroir peut réfléchit la lumière du Big Bang 
 vers la position d'un observateur de sortes que celui-ci reçoit cette lumière au temps 
 $t_0$.
@@ -277,14 +282,192 @@ De sortes que
 Dans un univers ouvert ($\kappa  = -1, \Omega < 1$) 
 dominé par la matière ($\Lambda = p = 0$), les équations de Friedmann deviennent
 \begin{align*}
-        \dot{a}^{2} &=  \frac{8 \pi G \rho a^2}{3} - 1 \\
+        \dot{a}^{2} &=  \frac{8 \pi G \rho a^2}{3} + 1 \\
         \ddot{a} &=  -\frac{4\pi G \rho a}{3} \\
         d(\rho a^3) &=  0
 \end{align*}
-On introduit le paramètre de densité 
+On introduit le paramètre de densité au temps présent 
 \[
-        \Omega = \frac{\rho}{\rho_c}, \hspace{1cm} \rho_c = \frac{3H^2}{8 \pi G}
+        \Omega_0 = \frac{\rho_0}{\rho_{0c}}, \hspace{1cm} \rho_{0c} = \frac{3H_0^2}{8 \pi G}
 \]
+En utilisant notre équation d'état, on peut remplacer $\rho a^{3} = \rho_0 a_0^{3}$:
+\begin{align*}
+        \implies \left( \frac{\dot{a}}{a_0} \right)^{2} 
+        &= H_0^{2}\Omega_0 \frac{a_0}{a}  + \frac{1}{a_0^{2}} \\
+\end{align*}
+On remarque que le terme $1/a_0^2$ est constant. On peut ainsi, en manipulant 
+l'équation, le remplacer en terme des constantes physiques actuelles:
+\[
+        \left( \frac{\dot{a}}{a_0} \right)^{2} - H_0^2 \Omega_0 \frac{a_0}{a} = \frac{1}{a_0^2}
+\]
+En particulier, cette équation est vrai à $a = a_0$, donc on obtient
+\begin{equation}\label{eq:FriedDustOuvert} 
+        \left( \frac{\dot{a}}{a_0} \right)^{2} 
+        = H_0^{2} \left( \Omega_0 \left( \frac{a_0}{a}\right) + (1 - \Omega_0)  \right)
+\end{equation} 
+On remarque premièrement que $\dot{a} > 0\, \forall\, t$, puisque le côté droit 
+de l'équation est toujours positif pour un univers ouvert ($\Omega_0 < 1$).
+Ainsi, on s'attend que le facteur d'échelle 
+augmente en fonction de $t$ et que $\Omega_0 a_0 /a$ devienne négligeable 
+devant $1 - \Omega_0$ à un certain moment dans l'évolution de l'univers.
+
+Ceci survient lorsque 
+\[
+        a \gg a^* = \frac{a_0\Omega_0}{1 - \Omega_0}
+\]
+Ainsi,
+%Pour $\Omega_0 \simeq 0$, le premier terme va devenir néglige
+\begin{align*}
+        \dot{a} &\simeq H_0 (1 - \Omega_0)^{1/2} \\
+        \implies \Aboxed{a(t) &\simeq H_0 (1 - \Omega_0)^{1/2} t,\,\,\, a \gg a^*}
+\end{align*}
+
+\subsection{}
+Pour répéter l'expérience de pensée de la sous section \ref{sec:2a}, on doit déterminer 
+la solution $a(t)$ générale. On définit le temps conforme $\eta$ de sortes que 
+\[
+        d\eta = H_0\sqrt{1 - \Omega_0}\frac{dt}{a}
+\]
+Ainsi,
+\[
+        \frac{1}{H_0 \sqrt{1 - \Omega_0}} \left( \frac{\dot{a}}{a_0} \right) =
+        \frac{1}{a_0 H_0 \sqrt{1 - \Omega_0}} \frac{da}{dt} = \frac{1}{a_0}\frac{d \ln a}{d\eta} 
+\]
+On intègre l'équation de Friedmann en terme du temps conforme avec la condition 
+initiale $a(\eta = 0) = 0$ et $a_0 = 1$:
+\[
+        \eta = 
+        \int_0^{a} \frac{d a'}{ \sqrt{\dfrac{\Omega_0}{1 - \Omega_0} a' + a'^2}}
+\]
+Cette intégrale a une primitive en terme du logarithme naturel:
+\[
+        \eta = 
+        \ln \left( \frac{\frac{1}{2}\frac{\Omega_0}{1 - \Omega_0}  + a
+                        + \sqrt{\frac{\Omega_0}{1 - \Omega_0} a + a^2}
+        }{\frac{1}{2}\frac{\Omega_0}{1 -\Omega_0}} \right)
+\]
+Notons que
+\[
+        \cosh^{-1}(x) = \ln(x + \sqrt{x^{2} - 1})
+\]
+Ainsi,
+\[
+        \eta = 
+        \cosh^{-1} \left( 1 + \frac{2a(1 - \Omega_0)}{\Omega_0} \right)
+\]
+D'où on trouve que 
+\begin{equation}\label{eq:Ahyperbolic} 
+        a(\eta) = \frac{1}{2} \frac{\Omega_0}{1 - \Omega_0}(\cosh (\eta) - 1)
+\end{equation} 
+Similairement, on trouve (avec $t(0) = 0$):
+\begin{equation}\label{eq:thyperbolic} 
+        t(\eta) =\frac{1}{H_0 \sqrt{1 - \Omega_0}} \int_0^{\eta}a(\eta')d\eta' = \frac{1}{2}\frac{\Omega_0}{
+        H_0(1 - \Omega_0)^{3/2}} (\sinh(\eta) - \eta) 
+\end{equation} 
+
+Notons qu'on a utiliser la variable $\eta$ pour représenter le temps conforme, car ce temps 
+correspond aussi à l'horizon cosmique définit plus haut (multiplié par le bon facteur). 
+Il est facile de le démontrer 
+avec les équations différentielles définit plus haut. La distance comobile est simplement
+\[
+        \eta_{\text{horizon}} = \frac{c}{H_0 \sqrt{1 - \Omega_0}} \eta
+\]
+\[
+        \chi(\eta) = \frac{c}{H_0 \sqrt{1 - \Omega_0}} (\eta_0 - \eta)
+\]
+où $\eta_0$ correspond au temps conforme présent. Le problème du miroir revient donc à résoudre 
+\[
+        \frac{1}{1 + z} = a(\eta = \frac{1}{2}\eta_0)
+\]
+On trouve $\eta_0$ par l'équation \eqref{eq:Ahyperbolic} ($a_0 = 1$):
+\[
+        \eta_0 = \cosh^{-1} \left( \frac{2 - \Omega_0}{ \Omega_0} \right)
+\]
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.45\textwidth]{numero2c_sol}
+        \caption{On remarque que la solution diverge lorsque $\Omega_0 \rightarrow 0$, 
+        ce qui attendu. La solution converge aussi vers la solution d'un 
+univers plat développé à la sous-section \ref{sec:2a}.}
+        \label{fig:z_miroir}
+\end{figure}
+
+%On peut donc exprimer l'horizon comobile entre des expressions trouvées pour $a(\xi)$ et 
+%$t(\xi)$. Notons que 
+
+
+\section{Le signal de EDGES}
+Le téléscope radio EDGES a mesuré la température de transition hyperfine 
+de l'hydrogène dans l'interval $13 < z < 27$. Un abaissement de la température 
+du spin de l'hydrogène est attendu entre $z=20$ et $z=15$, au moment où les 
+première étoiles commencent à rayonner et exciter l'état triplet de l'hydrogène.
+
+\subsection{Ratio de température}
+La température du rayonnement évolue comme
+\[
+        T_\gamma = T_{\text{CMB}}(1 + z)
+\]
+Alors que la température du gaz évolue plutôt comme
+\[
+        T_{\text{gaz}} = T_0(1 + z)^{2}
+\]
+En utilisant le fait que $T_{gaz}(z=200) \simeq T_\gamma(200)$, on peut 
+déterminer $T_0$ et on trouve
+\[
+        \boxed{\frac{T_\gamma}{T_{\text{gaz}}} \simeq \frac{201}{21}}
+\]
+Ce qui correspond à une température
+\[
+        T_{\text{gaz}}(z=20) = 5.97\, \text{K}
+\]
+
+\subsection{}
+La température du profil d'absorption $T_{21}$ suit la loi
+\[
+        T_{21} = \frac{1}{1 + z}(T_s - T_{\text{CMB}})(1 - e^{-\tau})
+\]
+où $\tau$ est l'épaisseur optique à l'époque de la réionization et $T_s$ est la 
+température du spin de l'hydrogène. Plus précisément, c'est la température 
+effective qui mesure le ratio d'hydrogène dans l'état singulet (1) et l'état 
+triplet (2) par la distribution de Boltzmann:
+\begin{equation}\label{eq:Tspin} 
+       \frac{n_2}{n_1} = \frac{g_2}{g_1}\exp \left\{ -\frac{E_{21}}{k_bT_s} \right\} 
+\end{equation} 
+%Avec le modèle de la section précédente, en assumant $T_{\text{gaz}} = T_s$ et 
+%en prenant $\tau = 0.066 \pm 0.012$ , on trouve \cite{}
+En assumant que l'épaisseur optique est $\tau \ll 1$, on trouve \cite{Madau1996}
+\begin{equation}\label{eq:Tedges} 
+        T_{21} \simeq (0.011\, \text{K})\frac{2}{h}\left( \frac{\Omega_b h^2}{0.2} \right)
+        \sqrt{\frac{1 + z}{9}} x_{HI} \left( \frac{T_S - T_\gamma}{T_S} \right)
+\end{equation} 
+où $T_S$ est la température de spin de l'hydrogène et $x_{HI}$. On suppose $T_{\text{gaz}} = T_S$ 
+et $x_{HI} \simeq 1$.
+Le résultat de EDGES montre que $\delta T\simeq -500\, \text{mK}$. On infère la 
+température du gaz en inversant la relation \ref{eq:Tedges} pour déterminer 
+\[
+        T_S(z=20) \simeq 0.62\, \text{K}
+\]
+Ce résultat confirme que la température de l'hydrogène qui est responsable 
+du signal mesuré par EDGES est beaucoup plus petite que celle à laquelle on 
+s'attend ($5.97\, \text{K}$). On peut construire un modèle où une certaine 
+quantité de matière noire $\chi$ très froide interagit avec le bain d'hydrogène 
+pour le refroidir. Dans ce cas,
+\[
+        \frac{T_{S}(z = 20)}{T_{\text{gaz}}(z=20)} = \frac{n_H}{n_H + n_\chi}
+\]
+Ainsi, en utilisant les résultats de la collaboration Planck \cite{PlanckCollaboration2018}:
+\[
+        \boxed{n_\chi = n_h \left( \frac{T_{\text{gaz}}}{T_S} - 1 \right) 
+        \simeq  0.014\, \text{cm}^{-3}}
+\]
+où $n_H \simeq 1.62\times 10^{-3}\, \text{cm}^{-3}$.
+
+\bibliography{bibfile.bib}
+\bibliographystyle{abbrv}
+
+
+
 
 \end{document}
 
