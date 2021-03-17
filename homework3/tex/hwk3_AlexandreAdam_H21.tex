@@ -20,11 +20,11 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
-% To work with inkfigures
-\usepackage{import}
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{xcolor}
+%% To work with inkfigures
+%\usepackage{import}
+%\usepackage{pdfpages}
+%\usepackage{transparent}
+%\usepackage{xcolor}
 
 \newcommand{\incfig}[2][1]{%
     \def\svgwidth{#1\columnwidth}
@@ -213,7 +213,7 @@ aujourd'hui via le temps de vie du neutron
 \[
         \tau_n^{-1} = \lambda_0G_F^2(1 + 3g_A^2) \frac{m_e^5}{2\pi^3}
 \]
-où $\lambda_0 \simeq 1.636$ et $\tau_n = 879.4 \pm 0.6\,\, \text{s}$ et 
+où $\lambda_0 \simeq 1.636$, $\tau_n = 879.4 \pm 0.6\,\, \text{s}$ et 
 $G_F$ est la constante de Fermi
 \[
         G_F = 1.16639(1) \times 10^{-5}\, \text{GeV}^{-2} (\hbar c)^{3}
@@ -264,8 +264,8 @@ On reconnaît la forme intégrale de la fonction $\Gamma(s)$, ainsi
 \begin{align*}
         n_{e^{+}}^{(0)}\expval{\sigma v} &= 
         \frac{4 G_F^2(1 + 3g_A^2) m_p}{ (2\pi)^{3}m_n}T^3
-        \left[ \mathcal{Q}^{2}\Gamma(3) + 2 \mathcal{Q}T \Gamma(4)
-        + T^2 \Gamma(5)\right] \\
+        \left[\Gamma(3) \mathcal{Q}^{2} + 2\Gamma(4) \mathcal{Q}T
+        + \Gamma(5)T^2 \right] \\
         &= 
         \frac{4 G_F^2(1 + 3g_A^2) m_p}{ (2\pi)^{3}m_n}T^3
         \left[ 2\mathcal{Q}^{2} + 12 \mathcal{Q}T
@@ -297,6 +297,143 @@ La constante numérique $253$ est comparable à $255$,
 celle obtenue par Bernstein (1988).
 %\citet{Bernstein1988}.
 
+\section{Vitesse du son lors du découplement}
+
+
+\subsection{Ratio de densité}
+On cherche 
+\[
+        R \equiv \frac{3\rho_b}{4\rho_\gamma}
+\]
+où l'indice $b$ réfère aux baryons.
+
+La première loi de la thermodynamique avec $dQ=0$ 
+dans un Univers régit par la métrique FRW 
+implique que
+\[
+        \dot{\rho} + 3\frac{\dot{a}}{a} (\rho + p) = 0
+\]
+qu'on réécrit
+\[
+        a^{-3}\frac{d(\rho a^3)}{dt} = -3\frac{\dot{a}}{a}p
+\]
+Pour la matière, l'équation d'état $p = 0$ implique que
+\[
+        a^{-3}\frac{d}{dt}(\rho_b a^3) = 0 \implies \rho_b = \rho_{b,0}a^{-3}
+\]
+Pour la radiation, on a plutôt $p = \rho_\gamma / 3$, donc
+\[
+        \dot{\rho}_\gamma + 4\frac{\dot{a}}{a} \rho_\gamma 
+        = a^{-4} \frac{d(\rho_\gamma a^4)}{dt} = 0
+\]
+Donc
+\[
+        \rho_\gamma = \rho_{\gamma, 0} a^{-4}
+\]
+Ainsi, le ratio de densité en terme du facteur d'échelle et 
+des paramètres de densités d'aujourd'hui (on omet les indices 0):
+\[
+        \boxed{R = \frac{3}{4} \frac{\Omega_b}{\Omega_r}a}
+\]
+Pour déterminer $R$ au moment du découplement, on doit déterminer 
+le moment dans l'évolution de l'Univers où le taux de diffusion Compton 
+devient égal au taux d'expansion de l'Univers. En pratique, on sait que 
+ce moment survient dans la limite non-relativistique de la distribution thermique
+des électrons, donc on utilise le taux de diffusion Thompson (unités de Planck):
+\[
+       \Gamma_{T} = X_e n_b \sigma_T
+\]
+où $\sigma_T$ est la section efficace de Thompson et $X_e$ est la 
+fraction d'électrons libres (dans l'Univers jeune, $X_e = 1$). On a 
+utilisé le fait que $n_e = n_p$ et on a
+négligé le nombre de neutrons dans l'Univers ($n_b \simeq n_p + n_H$).
+
+On utilise notre expression pour la densité baryonique et 
+l'approximation $\rho_b \simeq m_p n_b$ ($m_H \simeq m_p$) pour 
+obtenir
+\[
+        \Gamma_T = \frac{3H_0^2}{8 \pi G m_p} X_e \Omega_b a^{-3} 
+        = 2.2396\times 10^{-19}\,\,\text{s}^{-1} \,\,X_e \Omega_b h^2 a^{-3}
+\]
+On veut déterminer $a$ au moment où $\Gamma_T = H(a)$. Au moment 
+du découplement,
+l'Univers est en transition entre un 
+Univers dominé par la radiation et un Univers dominé par la 
+matière. Ainsi,
+\[
+        H(a) = H_0 \sqrt{ \Omega_r a^{-4} + \Omega_m a^{-3}}
+\]
+Au moment de la recombinaison, $X_e \simeq 10^{-2}$, donc
+\[
+        \frac{\Gamma_T}{H} = 1 = 
+                6.9108\times 10^{-4} 
+                \frac{\Omega_b h a^{-3}}{
+                        \sqrt{\Omega_r a^{-4} + \Omega_m a^{-3}}
+                }
+\]
+%Pour résoudre, on doit aussi déterminer $X_e$ en terme du facteur 
+%d'échelle. Pour ce faire, on doit résoudre l'équation de Boltzmann 
+%de la réaction de recombinaison $e^{-} + p \longleftrightarrow \gamma + H$. 
+%Ici, on assume que $n_\gamma = n_\gamma^{(0)}$:
+%\begin{equation}\label{eq:Boltzmannrecombinaison} 
+        %a^{-3} \frac{d(n_e a^3)}{dt} = n_e^{(0)}n_p^{(0)} \expval{\sigma v}
+        %\left\{ \frac{n_H}{n_{H}^{(0)}}  - \frac{n_e^2}{n_e^{(0)} n_p^{(0)}}\right\}
+%\end{equation} 
+%On peut simplifier cette expression avec l'équation de Saha 
+%pour les distributions à l'équilibres:
+%\[
+        %\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
+        %= \left( \frac{m_e k_B T}{2 \pi \hbar^{2}} \right)^{3/2}
+        %\exp \left\{ -\frac{\text{Ry}}{T} \right\}
+%\]
+%où $\text{Ry} = 2 \pi \hbar c R_{\infty } = m_e + m_p - m_h$ 
+%est la constante de Rydberg. Avec $n_h = n_b(1 - X_e)$ on 
+%obtient
+%\[
+        %a^{-3} \frac{d(n_e a^3)}{dt} =  (1 - X_e)n_b\beta  - X_e^2n_b^2\alpha^{(2)}
+%\]
+%où $\beta$ est le taux d'ionisation (on réintroduit les unités physiques)
+%\[
+        %\beta \equiv 
+        %\alpha^{(2)} c\left( \frac{m_e k_B T}{2 \pi \hbar^{2}} \right)^{3/2}
+        %\exp \left\{ -\frac{\text{Ry}}{k_B T} \right\}
+%\]
+%et $\alpha^{(2)} = \expval{\sigma v}$ est la section efficace thermalisée 
+%excluant 
+%le niveau fondamental $n = 1$ puisque le photon de recombinaison
+%de cet état état va ioniser immédiatement un atome $H$ voisin. 
+%On omet le détail de ce calcul et on se réfère à l'équation (3.42)
+%de Dodelson pour une approximation de cette section efficace
+%\[
+        %\alpha^{(2)} = 9.78 \frac{\hbar^2\alpha^{2}}{m_e^2c^2} 
+        %\left( \frac{\text{Ry}}{k_BT}  \right)^{1/2}
+        %\ln \left( \frac{\text{Ry}}{k_BT} \right)
+%\]
+%Sachant qu'au moment de la recombinaison, la température de la 
+%matière est approximativement la même que la température des 
+%photons à cause des processus de diffusion, on a
+%\[
+        %T = T_{\text{CMB}}a^{-1} = 2.725\,48\, a^{-1}\,\,\text{K}
+%\]
+%On a donc des expressions en terme du facteur d'échelle pour 
+%la plupart des quantités d'intérêt. On revient à l'équation de 
+%Boltzmann pour changer la variable d'intégration et simplifier le 
+%côté gauche. En effet, on réalise que $n_e a^3 \simeq X_e n_b a^3$. 
+%D'où
+%\[
+        %\frac{dX_e}{dt} =  (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)
+%\]
+%On utilise la seconde équation de Friedmann pour une expression 
+%de $dt$ dans le régime matière-radiation qui nous intéresse:
+%\[
+        %dt = \frac{da}{H_0 \sqrt{\Omega_0 a^{-2} + \Omega_m a^{-1}}}
+%\]
+%d'où l'équation différentielle
+%\[
+        %\frac{dX_e}{da} = (100\, \text{km}\,\text{s}^{-1}\, \text{Mpc}^{-1})^{-1}
+        %\frac{ (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)}{
+        %h\sqrt{\Omega_r a^{-2} + \Omega_m a^{-1}}}
+%\]
 
 
 

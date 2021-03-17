@@ -28,7 +28,7 @@ def main(args):
     factor = ((c * tau_n)**(-1) * (G_F_planck**2 * m_e_planck**5 * lambda_0 / 2 * np.pi**3 / (hbar * c) )**(-1)).decompose()
     print(factor)
 
-    factor2 = (4 *  m_p * Q**5  /  m_e_planck**5 /  lambda_0 / m_n).decompose()
+    factor2 = (4 *   Q**5  /  m_e_planck**5 /  lambda_0 * m_p / m_n).decompose()
     print(factor2)
     return
 

@@ -83,7 +83,7 @@ def main(args):
     plt.axhline(0.01, color="k", ls="--" )
     plt.axvline(T_star, color="k", ls="--")
     plt.annotate(fr"$k_B T^\star={T_star:.2f}$ MeV", (T_star+0.05, 0.5), rotation=90, fontsize=15)
-    plt.annotate(r"$n_{e^{\pm}} / n_\gamma = 0.01$", (1, 0.02), fontsize=15)
+    plt.annotate(r"$n_{e^{\pm}} / n_\gamma = 0.01$", (1, 0.04), fontsize=15)
     plt.savefig("../tex/figures/resultat_ratio_ne_ngamma.png")
     plt.show()
 
