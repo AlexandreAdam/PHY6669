@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[a4paper, margin=2cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{hyperref}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{figures/}} %Setting the graphicspath
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% To work with inkfigures
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+%\graphicspath{{figures/}}
+
+\pagestyle{fancy}
+\rhead{Alexandre Adam}
+\lhead{}
+\chead{}
+\rfoot{\today}
+\cfoot{\thepage}
+
+\newcommand{\angstrom}{\textup{\AA}}
+\numberwithin{equation}{section}
+\renewcommand\thesubsection{\alph{subsection})}
+\renewcommand\thesubsubsection{\Roman{subsubsection}}
+\newcommand{\s}{\hspace{0.1cm}}
+
+\newcommand{\pyoutput}[2]{#2}
+
+% Astronomy
+\DeclareSIUnit\parsec{pc}
+\DeclareSIUnit\lightyear{ly}
+
+\begin{document}
+\section{}
+La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
+est très sensible à $X_e$. En principe, on doit résoudre l'équation de 
+Boltzmann pour le processus de recombinaison pour déterminer sa valeur. 
+Une approximation qui simplifie légèrement notre tâche est d'utiliser 
+l'équation de Saha (qui cesse d'être valide très peu de temps 
+avant le moment qui nous intéresse). 
+\[
+		\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
+		= \left( \frac{m_e T}{2 \pi} \right)^{3/2}
+		\exp \left\{ -\frac{\text{Ry}}{T} \right\} 
+\]
+Selon notre approximation,
+\[
+		\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}}
+		= \frac{X_en_p}{1 - X_e}
+\]
+Pour éliminer $n_p$ de l'équation, on utilise $\eta_b \equiv n_b / n_\gamma$:
+\[
+		\implies n_p = \eta_b X_e n_\gamma = \eta_b X_e\frac{4 \zeta(3)}{\pi^2}T^3
+\]
+On doit donc résoudre
+\[
+		\frac{1 - X_e}{X_e^2} = \frac{4 \zeta(3)}{\pi^2}\eta_b \left( \frac{m_e}{2 \pi T} \right)^{-3/2}
+		\exp \left\{ \frac{\text{Ry}}{T} \right\} \equiv S(\eta_b, T)
+\]
+Qui a comme solution physique
+\[
+		X_e = \frac{-1 + \sqrt{1 + 4S}}{2S}
+\]
+Sachant que la température suit la loi
+\[
+		T = T_{\text{CMB}}a^{-1}
+\]
+au moment de la recombinaison, on peut donc chercher une solution 
+à l'équation transcendentale 
+\[
+		a_{\text{rec}} = 0.6840\, (\Omega_b h^2)
+\]
+\section{}
+Pour résoudre, on doit aussi déterminer $X_e$ en terme du facteur 
+d'échelle. Pour ce faire, on doit résoudre l'équation de Boltzmann 
+de la réaction de recombinaison $e^{-} + p \longleftrightarrow \gamma + H$. 
+Ici, on assume que $n_\gamma = n_\gamma^{(0)}$:
+\begin{equation}\label{eq:Boltzmannrecombinaison} 
+		a^{-3} \frac{d(n_e a^3)}{dt} = n_e^{(0)}n_p^{(0)} \expval{\sigma v}
+		\left\{ \frac{n_H}{n_{H}^{(0)}}  - \frac{n_e^2}{n_e^{(0)} n_p^{(0)}}\right\}
+\end{equation} 
+On peut simplifier cette expression avec l'équation de Saha 
+pour les distributions à l'équilibres:
+\[
+		\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
+		= \left( \frac{m_e T}{2 \pi} \right)^{3/2}
+		\exp \left\{ -\frac{\text{Ry}}{T} \right\} 
+\]
+où $\text{Ry} = 2 \pi \hbar c R_{\infty } = m_e + m_p - m_h$ 
+est la constante de Rydberg. Avec $n_h = n_b(1 - X_e)$ on 
+obtient
+\[
+		a^{-3} \frac{d(n_e a^3)}{dt} =  (1 - X_e)n_b\beta  - X_e^2n_b^2\alpha^{(2)}
+\]
+où $\beta$ est le taux d'ionisation (on réintroduit les unités physiques)
+\[
+		\beta \equiv 
+		\alpha^{(2)} c\left( \frac{m_e k_B T}{2 \pi \hbar^{2}} \right)^{3/2}
+		\exp \left\{ -\frac{\text{Ry}}{k_B T} \right\}
+\]
+et $\alpha^{(2)} = \expval{\sigma v}$ est la section efficace thermalisée 
+excluant 
+le niveau fondamental $n = 1$ puisque le photon de recombinaison
+de cet état état va ioniser immédiatement un atome $H$ voisin. 
+On omet le détail de ce calcul et on se réfère à l'équation (3.42)
+de Dodelson pour une approximation de cette section efficace
+\[
+		\alpha^{(2)} = 9.78 \frac{\hbar^2\alpha^{2}}{m_e^2c^2} 
+		\left( \frac{\text{Ry}}{k_BT}  \right)^{1/2}
+		\ln \left( \frac{\text{Ry}}{k_BT} \right)
+\]
+Sachant qu'au moment de la recombinaison, la température de la 
+matière est approximativement la même que la température des 
+photons à cause des processus de diffusion, on a
+\[
+		T = T_{\text{CMB}}a^{-1} = 2.725\,48\, a^{-1}\,\,\text{K}
+\]
+On a donc des expressions en terme du facteur d'échelle pour 
+la plupart des quantités d'intérêt. On revient à l'équation de 
+Boltzmann pour changer la variable d'intégration et simplifier le 
+côté gauche. En effet, on réalise que $n_e a^3 \simeq X_e n_b a^3$. 
+D'où
+\[
+		\frac{dX_e}{dt} =  (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)
+\]
+On utilise la seconde équation de Friedmann pour une expression 
+de $dt$ dans le régime matière-radiation qui nous intéresse:
+\[
+		dt = \frac{da}{H_0 \sqrt{\Omega_0 a^{-2} + \Omega_m a^{-1}}}
+\]
+d'où l'équation différentielle
+\[
+		\frac{dX_e}{da} = (100\, \text{km}\,\text{s}^{-1}\, \text{Mpc}^{-1})^{-1}
+		\frac{ (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)}{
+		h\sqrt{\Omega_r a^{-2} + \Omega_m a^{-1}}}
+\]
+
+
+\end{document}
+

@@ -356,7 +356,11 @@ des électrons, donc on utilise le taux de diffusion Thompson (unités de Planck
        \Gamma_{T} = X_e n_b \sigma_T
 \]
 où $\sigma_T$ est la section efficace de Thompson et $X_e$ est la 
-fraction d'électrons libres (dans l'Univers jeune, $X_e = 1$). On a 
+fraction d'électrons libres.
+\[
+        X_e \equiv \frac{n_p}{n_H + n_p} = \frac{n_e}{n_b}
+\]
+On a 
 utilisé le fait que $n_e = n_p$ et on a
 négligé le nombre de neutrons dans l'Univers ($n_b \simeq n_p + n_H$).
 
@@ -372,41 +376,131 @@ du découplement,
 l'Univers est en transition entre un 
 Univers dominé par la radiation et un Univers dominé par la 
 matière. Toutefois, dans un Univers plat $\Lambda \text{CDM}$ on 
-peut négligé la radiation au moment de la recombinaison (ce n'est 
+peut négligé la radiation au moment du découplement (ce n'est 
 pas précis mais cela nous permet de simplifier énormément les expressions): 
 \[
-        H(a_{\text{rec}}) \simeq H_0  \Omega_m^{1/2} a_{\text{rec}}^{-3/2}
+        H(a_{\text{dec}}) \simeq H_0  \Omega_m^{1/2} a_{\text{dec}}^{-3/2}
 \]
 %Au moment de la recombinaison, on suppose que $X_e \simeq 10^{-2}$ (en principe, 
 %on devrait intégrer l'équation de Boltzmann pour déterminer $X_e(a)$), donc
 Ainsi,
 \[
         \frac{\Gamma_T}{H} = 1 = 
-                6.9108\times 10^{-2}\,\, \Omega_b^{1/2} h X_e a_{\text{rec}}^{-3/2}
+                6.9108\times 10^{-2}\,\, \Omega_b^{1/2} h X_e a_{\text{dec}}^{-3/2}
 \]
 donc
 \[
-        a_{\text{rec}} = 0.6840\, (\Omega_b h^2X^2_e(a_{\text{rec}}))^{1/3}
+        a_{\text{dec}} = 0.6840\, (\Omega_b h^2X^2_e(a_{\text{dec}}))^{1/3}
 \]
-La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
-est très sensible à $X_e$. En principe, on doit résoudre l'équation de 
-Boltzmann pour le processus de recombinaison pour déterminer sa valeur. 
-Une approximation qui simplifie légèrement notre tâche est d'utiliser 
-l'équation de Saha (qui cesse d'être valide précisément au moment qui nous intéresse).
-%Pour résoudre, on doit aussi déterminer $X_e$ en terme du facteur 
-%d'échelle. Pour ce faire, on doit résoudre l'équation de Boltzmann 
-%de la réaction de recombinaison $e^{-} + p \longleftrightarrow \gamma + H$. 
-%Ici, on assume que $n_\gamma = n_\gamma^{(0)}$:
-%\begin{equation}\label{eq:Boltzmannrecombinaison} 
-        %a^{-3} \frac{d(n_e a^3)}{dt} = n_e^{(0)}n_p^{(0)} \expval{\sigma v}
-        %\left\{ \frac{n_H}{n_{H}^{(0)}}  - \frac{n_e^2}{n_e^{(0)} n_p^{(0)}}\right\}
-%\end{equation} 
-%On peut simplifier cette expression avec l'équation de Saha 
-%pour les distributions à l'équilibres:
+On peut donc estimer la valeur de $R$ au moment du découplement en estimant 
+$X_e \simeq 10^{-2}$:
+\[
+        \boxed{R(a_{\text{dec}}) \simeq \frac{520.32}{\zeta(3)}(\Omega_b h^2)^{4/3}}
+\]
+
+\subsection{Vitesse du son}
+La vitesse du son au découplement est déterminé en terme de sa définition
+\[
+        c_s^2 \equiv \frac{\partial P}{\partial \rho}\bigg|_{S}
+\]
+où l'entropie est guardée constante. Comme la pression du fluide 
+baryons-photons est dominées par la pression des photons:
+\[
+        P \simeq P_\gamma = \frac{1}{3}\rho_\gamma
+\]
+D'où
+\[
+        c_s^2 = \frac{1}{3}\frac{\partial \rho_\gamma}{\partial (\rho_\gamma + \rho_b)}
+        = \frac{1}{3}\left( 1 + \frac{\partial \rho_b}{\partial \rho_\gamma } \right)^{-1}
+\]
+En remplaçant $a^{-1} = T/T_{\text{CMB}}$ dans les expressions trouvées précédemment 
+pour $\rho_\gamma$ et $\rho_b$, on trouve
+\[
+        c_s^2 = \frac{1}{3}\left( 1 + \frac{\partial \rho_b}{\partial T} 
+        \left( \frac{\partial \rho_\gamma}{\partial T} \right)^{-1}\right)^{-1}
+        = 
+        \frac{1}{3} \left( 1 + \frac{3}{4}\frac{\rho_b}{\rho_\gamma} \right)
+\]
+D'où
+\[
+        c_s = \frac{1}{\sqrt{3}}\sqrt{\frac{1}{1 + R}}
+\]
+En utilisant la réponse trouvée précédemment, on peut déterminer la vitesse 
+du son de la matière baryonique au moment du découplement dans un 
+espace de paramètres plausibles pour $\Omega_b h^2$.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{speed_of_sound}
+        \caption{Vitesse du son lors du découplement (fraction de la 
+        vitesse de la lumière).}
+        \label{fig:spped_of_sound}
+\end{figure}
+
+\subsection{Nombre d'onde de Jeans}
+Le nombre d'onde de Jeans dans les coordonnées comobiles est 
+\[
+        k_J = \sqrt{\frac{4\pi G \rho_b a^2}{c_s^2}}
+\]
+et décrit la taille minimale d'un objet de densité de matière $\rho_b$ 
+pour l'instabilité de Jeans (effondrement gravitationnel). Le rayon comobile 
+de l'Univers dominé par la radiation est 
+\[
+        \eta = \frac{}{}
+\]
+
+Sachant que le 
+redshift de découplement est $z_{\text{dec}} \simeq 1090$, on peut 
+déterminer 
+
+
+%La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
+%est très sensible à $X_e$. En principe, on doit résoudre l'équation de 
+%Boltzmann pour le processus de recombinaison pour déterminer sa valeur. 
+%Une approximation qui simplifie légèrement notre tâche est d'utiliser 
+%l'équation de Saha (qui cesse d'être valide très peu de temps 
+%avant le moment qui nous intéresse). 
+
+%%Pour résoudre, on doit aussi déterminer $X_e$ en terme du facteur 
+%%d'échelle. Pour ce faire, on doit résoudre l'équation de Boltzmann 
+%%de la réaction de recombinaison $e^{-} + p \longleftrightarrow \gamma + H$. 
+%%Ici, on assume que $n_\gamma = n_\gamma^{(0)}$:
+%%\begin{equation}\label{eq:Boltzmannrecombinaison} 
+        %%a^{-3} \frac{d(n_e a^3)}{dt} = n_e^{(0)}n_p^{(0)} \expval{\sigma v}
+        %%\left\{ \frac{n_H}{n_{H}^{(0)}}  - \frac{n_e^2}{n_e^{(0)} n_p^{(0)}}\right\}
+%%\end{equation} 
+%%On peut simplifier cette expression avec l'équation de Saha 
+%%pour les distributions à l'équilibres:
 %\[
         %\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
-        %= \left( \frac{m_e k_B T}{2 \pi \hbar^{2}} \right)^{3/2}
-        %\exp \left\{ -\frac{\text{Ry}}{T} \right\}
+        %= \left( \frac{m_e T}{2 \pi} \right)^{3/2}
+        %\exp \left\{ -\frac{\text{Ry}}{T} \right\} 
+%\]
+%Selon notre approximation,
+%\[
+        %\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}}
+        %= \frac{X_en_p}{1 - X_e}
+%\]
+%Pour éliminer $n_p$ de l'équation, on utilise $\eta_b \equiv n_b / n_\gamma$:
+%\[
+        %\implies n_p = \eta_b X_e n_\gamma = \eta_b X_e\frac{4 \zeta(3)}{\pi^2}T^3
+%\]
+%On doit donc résoudre
+%\[
+        %\frac{1 - X_e}{X_e^2} = \frac{4 \zeta(3)}{\pi^2}\eta_b \left( \frac{m_e}{2 \pi T} \right)^{-3/2}
+        %\exp \left\{ \frac{\text{Ry}}{T} \right\} \equiv S(\eta_b, T)
+%\]
+%Qui a comme solution physique
+%\[
+        %X_e = \frac{-1 + \sqrt{1 + 4S}}{2S}
+%\]
+%Sachant que la température suit la loi
+%\[
+        %T = T_{\text{CMB}}a^{-1}
+%\]
+%au moment de la recombinaison, on peut donc chercher une solution 
+%à l'équation transcendentale 
+%\[
+        %a_{\text{rec}} = 0.6840\, (\Omega_b h^2)
 %\]
 %où $\text{Ry} = 2 \pi \hbar c R_{\infty } = m_e + m_p - m_h$ 
 %est la constante de Rydberg. Avec $n_h = n_b(1 - X_e)$ on 
