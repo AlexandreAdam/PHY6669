@@ -337,15 +337,15 @@ fond diffus cosmologique à partir de la distribution de Planck:
 \]
 De plus, on réécrit $\rho_b$ en terme de la densité critique:
 \[
-        \rho_{b} = \Omega_b \rho_{\text{cr}} 
-        = 5.3397\times 10^{8}\,\,\text{cm}^{-4}\,\,\Omega_b h^2
+        \rho_{b} = \Omega_b \rho_{\text{cr}}a^{-3} 
+        = 5.3397\times 10^{8}\,\,\text{cm}^{-4}\,\,(\Omega_b h^2)a^{-3}
 \]
 Ainsi, le ratio de densité en terme du facteur d'échelle et 
 des paramètres de densités d'aujourd'hui 
 ({$T_{\text{CMB}} = 2.725\,\,\text{K} = 11.9\,\,\text{cm}^{-1}$}):
 \[
         \boxed{R =  
-        \frac{6.6565\times10^{4}}{\zeta(2)} \Omega_bh^2 a}
+        \frac{66\,565}{\zeta(2)} (\Omega_bh^2) a}
 \]
 Pour déterminer $R$ au moment du découplement, on doit déterminer 
 le moment dans l'évolution de l'Univers où le taux de diffusion Compton 
@@ -392,10 +392,11 @@ donc
 \[
         a_{\text{dec}} = 0.6840\, (\Omega_b h^2X^2_e(a_{\text{dec}}))^{1/3}
 \]
-On peut donc estimer la valeur de $R$ au moment du découplement en estimant 
-$X_e \simeq 10^{-2}$:
+%On peut donc estimer la valeur de $R$ au moment du découplement en estimant 
+%$X_e \simeq 10^{-2}$:
+En estimant $X_e(a_{\text{dec}}) \simeq 10^{-2}$, on obtient
 \[
-        \boxed{R(a_{\text{dec}}) \simeq \frac{520.32}{\zeta(3)}(\Omega_b h^2)^{4/3}}
+        \boxed{R(a_{\text{dec}}) \simeq \frac{520.32}{\zeta(2)}(\Omega_b h^2)^{4/3}}
 \]
 
 \subsection{Vitesse du son}
@@ -419,7 +420,7 @@ pour $\rho_\gamma$ et $\rho_b$, on trouve
         c_s^2 = \frac{1}{3}\left( 1 + \frac{\partial \rho_b}{\partial T} 
         \left( \frac{\partial \rho_\gamma}{\partial T} \right)^{-1}\right)^{-1}
         = 
-        \frac{1}{3} \left( 1 + \frac{3}{4}\frac{\rho_b}{\rho_\gamma} \right)
+        \frac{1}{3} \left( 1 + \frac{3}{4}\frac{\rho_b}{\rho_\gamma} \right)^{-1}
 \]
 D'où
 \[
@@ -442,15 +443,76 @@ Le nombre d'onde de Jeans dans les coordonnées comobiles est
         k_J = \sqrt{\frac{4\pi G \rho_b a^2}{c_s^2}}
 \]
 et décrit la taille minimale d'un objet de densité de matière $\rho_b$ 
-pour l'instabilité de Jeans (effondrement gravitationnel). Le rayon comobile 
-de l'Univers dominé par la radiation est 
+pour l'instabilité de Jeans (effondrement gravitationnel). 
+On s'intéresse à la période avant le découplement, donc 
+$a < a_{\text{dec}}$. À ce moment, l'Univers est dominé par 
+la radiation donc ($a(t=0) = 0$):
 \[
-        \eta = \frac{}{}
+        \dot{a} = H_0 \Omega_r^{1/2}a^{-1} \implies 
+        a(t) = \left( 2H_0\Omega_r^{1/2} t \right)^{1/2}
 \]
+Donc, l'horizon est
+\[
+        \eta(t) = \int_{0}^{t} \frac{dt'}{a(t')} 
+        = \sqrt{\frac{t}{2H_0\Omega_r^{1/2}}} = \frac{a}{2H_0 \Omega_r^{1/2}}
+\]
+Malgré le fait que $k_J$ diminue en fonction de $a$, l'accélération 
+de l'expansion de l'Univers fait en sorte que $\eta k_J \rightarrow 1$ 
+environ au moment du découplement, ce qui permet au large structure de 
+l'Univers de commencer à se former sous l'attraction gravitationnelle.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{eta_kj}
+        \caption{}
+\end{figure}
 
-Sachant que le 
-redshift de découplement est $z_{\text{dec}} \simeq 1090$, on peut 
-déterminer 
+
+\section{La vraisemblance}
+On considère la fonction de vraisemblance Gaussienne:
+\[
+        \mathcal{L}(\mathcal{D} \mid w, \sigma_w^2) 
+        = \frac{1}{(2 \pi \sigma_w^2)^{|\mathcal{D}|/2}}
+        \exp \left\{ -\sum_{i=1}^{|\mathcal{D}|}\frac{(d_i - w)^{2} }{2 \sigma_w^2} \right\}
+\]
+On cherche l'erreur sur la déviation standard $\sigma_w$. On suppose que la 
+fonction de vraisemblance est quadratique autour de la solution MLE. 
+\[
+        \ln \mathcal{L}(\mathcal{\mathcal{D}} \mid \sigma_w;\bar{w}) \simeq 
+        \ln \mathcal{L}(\mathcal{D} \mid \bar{\sigma}_w; \bar{w}) 
+        + \frac{1}{2}\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma_w^2} 
+        \bigg|_{\sigma_w=\bar{\sigma}_w} (\sigma_w - \bar{\sigma}_w)^{2}
+\]
+En effet, on sait que
+\[
+        \frac{\partial \ln \mathcal{L}}{\partial \sigma_w}\bigg|_{\text{MLE}} = 
+        \frac{1}{\sigma_w^{3}}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2} - 
+        \frac{|\mathcal{D}|}{\sigma_w} = 0
+\]
+D'où on avait trouvé la solution MLE pour la variance
+\[
+        \bar{\sigma}^2_w = 
+        \frac{1}{|\mathcal{D}|}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}
+\]
+Où $\bar{w}$ est la solution attendu pour le signal $w$ (moyenne). L'erreur 
+sur la déviation standard est 2 fois l'inverse coefficient de deuxième ordre dans 
+l'expansion de Taylor de la vraisemblance autour de son maximum global.
+\begingroup
+\allowdisplaybreaks
+\begin{align*}
+        \sigma_{\sigma_w}^{-1} &= -\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma_w^2}
+        \bigg|_{\text{MLE}} \\
+                          &= \frac{3}{\bar{\sigma}_w^4}\sum_{i=1}^{|\mathcal{D}|}
+        (d_i - \bar{w})^{2} - \frac{|\mathcal{D}|}{\bar{\sigma}_w^{2}} \\
+                          &= \frac{2|\mathcal{D}|^2}{
+                          \displaystyle \sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}} \\
+        \implies \Aboxed{  \sigma_{\sigma_w}  &= \frac{1}{2|\mathcal{D}|^{2}}
+        \sum_{i = 1}^{|\mathcal{D}|}(d_i -\bar{w})^{2}}
+\end{align*}
+\endgroup
+Donc l'incertitude sur la déviation standard diminue très rapidement 
+avec la taille du jeu de donnée $|\mathcal{D}|$.
+
+
 
 
 %La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
