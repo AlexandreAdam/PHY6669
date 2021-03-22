@@ -22,6 +22,7 @@ h = 0.68
 X_e = 1e-2
 Omega_b_hsq = 0.022383 # Planck2018
 eta_b = 5.5e-10 * (Omega_b_hsq/0.02)
+print(f"eta_b = {eta_b:.3e}")
 TCMB = ((k_B * 2.725 * u.K)/hbar/c).to(1/u.cm)
 z_rec_true = 1090
 Ry = (2 * np.pi * Ry * (hbar * c)).to(u.eV)
@@ -78,6 +79,10 @@ def main(args):
 
     z_dec_saha = a_dec_saha_solution()
     print(f"z_dec_saha = {z_dec_saha}")
+
+    T_dec = (k_B * 2.725 * u.K).to(u.eV) *(1 + z_dec_saha)
+    print(f"T_dec = {T_dec}")
+
 
     R_factor_final2 = R_factor /(1 + z_dec_saha) * Omega_b_hsq
     print(f"R_factor_final_saha = {R_factor_final2}")

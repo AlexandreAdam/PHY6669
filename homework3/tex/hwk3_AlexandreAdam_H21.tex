@@ -451,18 +451,20 @@ Sachant que la température suit la loi
 \]
 et que la fraction de baryons sur photons est mesurée à
 \[
-        \eta_b = 5.5\times 10^{-10} \left( \frac{\Omega_b h^2}{0.02} \right)
+        \eta_b = 6.155\times 10^{-10} \left( \frac{\Omega_b h^2}{0.022383} \right)
 \]
 on peut finalement résoudre l'équation \ref{eq:a_dec} en utilisant la 
 méthode numérique de bissection et les paramètres cosmologiques 
 \[
         \Omega_b = 0.048;\,\,\, \Omega_m = 0.31;\,\,\,h=0.68
 \]
-On obtiens $X_e(a_{\text{dec}}) = 6.56\times 10^{-3}$ et le facteur d'échelle 
+On obtient $X_e(a_{\text{dec}}) = 6.56\times 10^{-3}$, $T_{\text{dec}} = 0.2636\,\,\text{eV}$ 
+et le facteur d'échelle 
 obtenu correspond 
 au redshift $z_{\text{dec}} \simeq 1121$. Notons que la fraction d'ionization 
-elle-même ne dépend que faiblement des paramètres cosmologiques. L'exponentielle 
-joue un rôle beaucoup plus important (expression pour $S$). La réponse est comparable à
+elle-même ne dépend que faiblement des paramètres cosmologiques. La température $T_{\text{dec}}$
+joue un rôle beaucoup plus important à cause du facteur exponentiel. 
+La réponse est comparable à
 $z_{\text{dec}} = 1090$ annoncé. Toutefois, ce résultat plus précis 
 requiert d'intégrer l'équation de 
 Boltzmann et de considérer la contribution de $\Omega_r$ 
@@ -472,7 +474,7 @@ dans le facteur de Hubble. Ainsi, avec l'approxmation de Saha on obtient
 \]
 Pour déterminer la vitesse du son à la prochaine étape, cette approximation ne change 
 pas le résultat de façon significative comparé à la vrai réponse et donc on conserve 
-le facteur numérique de la réponse théorique pour la prochain sous-section.
+le facteur numérique de la réponse théorique pour la prochaine sous-section.
 %On peut donc estimer la valeur de $R$ au moment du découplement en estimant 
 %$X_e \simeq 10^{-2}$:
 %En estimant $X_e(a_{\text{dec}}) \simeq 10^{-2}$, on obtient
@@ -560,19 +562,21 @@ On considère la fonction de vraisemblance Gaussienne:
         = \frac{1}{(2 \pi \sigma_w^2)^{|\mathcal{D}|/2}}
         \exp \left\{ -\sum_{i=1}^{|\mathcal{D}|}\frac{(d_i - w)^{2} }{2 \sigma_w^2} \right\}
 \]
+où $\mathcal{D} = \{d_i \}$ est le jeu de données et $|\mathcal{D}|$ est 
+la taille du jeu de donnée.
 On cherche l'erreur sur la déviation standard $\sigma_w$. On suppose que la 
 fonction de vraisemblance est quadratique autour de la solution MLE. 
 \[
-        \ln \mathcal{L}(\mathcal{\mathcal{D}} \mid \sigma_w;\bar{w}) \simeq 
-        \ln \mathcal{L}(\mathcal{D} \mid \bar{\sigma}_w; \bar{w}) 
+        \ln \mathcal{L}(\mathcal{\mathcal{D}} \mid \sigma_w, w=\bar{w}) \simeq 
+        \ln \mathcal{L}(\mathcal{D} \mid \bar{\sigma}_w, \bar{w}) 
         + \frac{1}{2}\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma_w^2} 
         \bigg|_{\sigma_w=\bar{\sigma}_w} (\sigma_w - \bar{\sigma}_w)^{2}
 \]
 En effet, on sait que
 \[
         \frac{\partial \ln \mathcal{L}}{\partial \sigma_w}\bigg|_{\text{MLE}} = 
-        \frac{1}{\sigma_w^{3}}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2} - 
-        \frac{|\mathcal{D}|}{\sigma_w} = 0
+        \frac{1}{\bar{\sigma}_w^{3}}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2} - 
+        \frac{|\mathcal{D}|}{\bar{\sigma}_w} = 0
 \]
 D'où on avait trouvé la solution MLE pour la variance
 \[
@@ -580,8 +584,10 @@ D'où on avait trouvé la solution MLE pour la variance
         \frac{1}{|\mathcal{D}|}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}
 \]
 Où $\bar{w}$ est la solution attendu pour le signal $w$ (moyenne). L'erreur 
-sur la déviation standard est 2 fois l'inverse coefficient de deuxième ordre dans 
-l'expansion de Taylor de la vraisemblance autour de son maximum global.
+sur la déviation standard est 2 fois l'inverse du 
+coefficient de deuxième ordre dans 
+l'expansion de Taylor de la vraisemblance autour de son maximum global (
+définition de FHWM):
 \begingroup
 \allowdisplaybreaks
 \begin{align*}
@@ -592,7 +598,7 @@ l'expansion de Taylor de la vraisemblance autour de son maximum global.
                           &= \frac{2|\mathcal{D}|^2}{
                           \displaystyle \sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}} \\
         \implies \Aboxed{  \sigma_{\sigma_w}  &= \frac{1}{2|\mathcal{D}|^{2}}
-        \sum_{i = 1}^{|\mathcal{D}|}(d_i -\bar{w})^{2}}
+        \sum_{i = 1}^{|\mathcal{D}|}(d_i -\bar{w})^{2} = \frac{\bar{\sigma}_w}{2|\mathcal{D}|}}
 \end{align*}
 \endgroup
 Donc l'incertitude sur la déviation standard diminue très rapidement 
