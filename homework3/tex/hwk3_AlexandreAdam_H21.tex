@@ -93,12 +93,12 @@ La densité numérique des photons se calcule directment à partir de la distrib
 de Planck
 \begin{equation}\label{eq:PlanckDensity} 
         n_\gamma^{(0)} = g_\gamma\int_0^{\infty}4\pi\frac{B(\nu, T) d\nu}{h\nu} = 
-        \frac{8 \pi }{c^3} g_\gamma \int_0^{\infty } 
+        \frac{8 \pi }{c^3}  \int_0^{\infty } 
         \frac{\nu^2 d\nu}{\exp \left\{ h\nu / k_B T \right\} - 1}
 \end{equation} 
 Avec substition on retrouve une forme standard pour l'intégrale qui devient
 \[
-        n_\gamma^{(0)} = g_\gamma\frac{2\zeta(3 )}{\pi^2} \left( \frac{k_B T}{\hbar c} \right)^{3}
+        n_\gamma^{(0)} = \frac{2\zeta(3 )}{\pi^2} \left( \frac{k_B T}{\hbar c} \right)^{3}
 \]
 où $\zeta(s)$ est la fonction zeta de Riemann.
 On cherche la température $T^\star$ à partir de laquelle la densité numérique des électrons 
@@ -335,6 +335,8 @@ fond diffus cosmologique à partir de la distribution de Planck:
 \[
         \rho_{\gamma, 0} = \frac{2\zeta(2)}{5}T^4_{\text{CMB}}
 \]
+On réalise alors que $T_\gamma \propto a$ en comparant nos deux 
+expressions pour la densité d'énergie de radiation. 
 De plus, on réécrit $\rho_b$ en terme de la densité critique:
 \[
         \rho_{b} = \Omega_b \rho_{\text{cr}}a^{-3} 
@@ -347,6 +349,14 @@ des paramètres de densités d'aujourd'hui
         \boxed{R =  
         \frac{66\,565}{\zeta(2)} (\Omega_bh^2) a}
 \]
+On peut évaluer $R$ au découplement avec le résultat théorique
+$z_{\text{dec}} \simeq 1090$, de sortes que
+\[
+        \boxed{R(z_{\text{dec}} = 1090) = 0.8302 \left( \frac{\Omega_b h^2}{0.022383} \right)}
+\]
+Où on a normalisé l'expression par rapport au résultat de la collaboration Planck (2018).
+La suite est une dérivation théorique approximative de ce résultat.
+
 Pour déterminer $R$ au moment du découplement, on doit déterminer 
 le moment dans l'évolution de l'Univers où le taux de diffusion Compton 
 devient égal au taux d'expansion de l'Univers. En pratique, on sait que 
@@ -368,36 +378,108 @@ On utilise notre expression pour la densité baryonique et
 l'approximation $\rho_b \simeq m_p n_b$ ($m_H \simeq m_p$) pour 
 obtenir
 \[
-        \Gamma_T = \frac{3H_0^2 \sigma_T}{8 \pi G m_p} X_e \Omega_b a^{-3} 
+        \Gamma_T = %\frac{3H_0^2 \sigma_T}{8 \pi G m_p} 
+        \frac{\rho_{\text{cr}}}{m_p} \sigma_T
+        X_e \Omega_b a^{-3} 
         = 2.2396\times 10^{-19}\,\,\text{s}^{-1} \,\,X_e \Omega_b h^2 a^{-3}
 \]
 On veut déterminer $a$ au moment où $\Gamma_T = H(a)$. Au moment 
 du découplement,
 l'Univers est en transition entre un 
 Univers dominé par la radiation et un Univers dominé par la 
-matière. Toutefois, dans un Univers plat $\Lambda \text{CDM}$ on 
+matière. 
+Toutefois, dans un Univers plat $\Lambda \text{CDM}$ on 
 peut négligé la radiation au moment du découplement (ce n'est 
 pas précis mais cela nous permet de simplifier énormément les expressions): 
 \[
         H(a_{\text{dec}}) \simeq H_0  \Omega_m^{1/2} a_{\text{dec}}^{-3/2}
+        %H(a_{\text{dec}}) \simeq H_0 \sqrt{\Omega_m a^{-3} + \Omega_r a^{-4}}
 \]
 %Au moment de la recombinaison, on suppose que $X_e \simeq 10^{-2}$ (en principe, 
 %on devrait intégrer l'équation de Boltzmann pour déterminer $X_e(a)$), donc
 Ainsi,
 \[
         \frac{\Gamma_T}{H} = 1 = 
-                6.9108\times 10^{-2}\,\, \Omega_b^{1/2} h X_e a_{\text{dec}}^{-3/2}
+        %6.9108\times 10^{-2}\,\, \frac{\Omega_b}{\Omega_m^{1/2}} h X_e a_{\text{dec}}^{-3/2}
+        %\frac{3H_0 \sigma_T}{8 \pi G m_p \Omega_m^{1/2}} X_e \Omega_b a_{\text{dec}}^{-3/2} 
+        %\frac{\rho_{\text{cr}}\sigma_T}{m_p H_0\sqrt{\Omega_m a^{-3} + \Omega_r a^{-4}}}
+        \frac{\rho_{\text{cr}} \sigma_T}{m_p H_0 \Omega_m^{1/2}}
+        X_e \Omega_b a_{\text{dec}}^{-3/2}
 \]
-donc
+d'où
+\begin{equation}\label{eq:a_dec} 
+        a_{\text{dec}} = 
+        %0.6840\, (\Omega_b h^2X^2_e(a_{\text{dec}}))^{1/3}
+        \left( \frac{\rho_{\text{cr}} \sigma_T}{m_p H_0 \Omega_m^{1/2}} \right)^{2/3}
+        \Omega_b^{2/3}(X_e(a_{\text{dec}}))^{2/3}
+\end{equation} 
+On obtient une équation implicite en terme de $a_{\text{dec}}$. La solution 
+finale pour $R$ est très sensible à $X_e$ et on doit donc utiliser un modèle 
+plausible pour la fraction d'ionisation.
+
+Une approximation qui simplifie légèrement notre tâche est d'utiliser 
+l'équation de Saha (qui cesse d'être valide très peu de temps 
+avant le moment qui nous intéresse). 
+
 \[
-        a_{\text{dec}} = 0.6840\, (\Omega_b h^2X^2_e(a_{\text{dec}}))^{1/3}
+        \frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
+        = \left( \frac{m_e T}{2 \pi} \right)^{3/2}
+        \exp \left\{ -\frac{\text{Ry}}{T} \right\} 
 \]
+où $\text{Ry}$ est la constante de Rydberg.
+Selon nos approximations précédentes ($n_b \simeq n_p + n_n$),
+\[
+        \frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}}
+        = \frac{X_en_p}{1 - X_e}
+\]
+Pour éliminer $n_p$ de l'équation, on utilise $\eta_b \equiv n_b / n_\gamma$:
+\[
+        \implies n_p = \eta_b X_e n_\gamma = \eta_b X_e\frac{2 \zeta(3)}{\pi^2}T^3
+\]
+On doit donc résoudre
+\[
+        \frac{1 - X_e}{X_e^2} = \frac{2 \zeta(3)}{\pi^2}\eta_b \left( \frac{m_e}{2 \pi T} \right)^{-3/2}
+        \exp \left\{ \frac{\text{Ry}}{T} \right\} \equiv S(\eta_b, T)
+\]
+Qui a comme solution physique
+\[
+        X_e = \frac{-1 + \sqrt{1 + 4S}}{2S}
+\]
+Sachant que la température suit la loi
+\[
+        T = T_{\text{CMB}}a^{-1}
+\]
+et que la fraction de baryons sur photons est mesurée à
+\[
+        \eta_b = 5.5\times 10^{-10} \left( \frac{\Omega_b h^2}{0.02} \right)
+\]
+on peut finalement résoudre l'équation \ref{eq:a_dec} en utilisant la 
+méthode numérique de bissection et les paramètres cosmologiques 
+\[
+        \Omega_b = 0.048;\,\,\, \Omega_m = 0.31;\,\,\,h=0.68
+\]
+On obtiens $X_e(a_{\text{dec}}) = 6.56\times 10^{-3}$ et le facteur d'échelle 
+obtenu correspond 
+au redshift $z_{\text{dec}} \simeq 1121$. Notons que la fraction d'ionization 
+elle-même ne dépend que faiblement des paramètres cosmologiques. L'exponentielle 
+joue un rôle beaucoup plus important (expression pour $S$). La réponse est comparable à
+$z_{\text{dec}} = 1090$ annoncé. Toutefois, ce résultat plus précis 
+requiert d'intégrer l'équation de 
+Boltzmann et de considérer la contribution de $\Omega_r$ 
+dans le facteur de Hubble. Ainsi, avec l'approxmation de Saha on obtient
+\[
+        \boxed{R^{\text{Saha}}(a_{\text{dec}}) = 1.328 \left( \frac{\Omega_b h^2}{0.022383} \right)}
+\]
+Pour déterminer la vitesse du son à la prochaine étape, cette approximation ne change 
+pas le résultat de façon significative comparé à la vrai réponse et donc on conserve 
+le facteur numérique de la réponse théorique pour la prochain sous-section.
 %On peut donc estimer la valeur de $R$ au moment du découplement en estimant 
 %$X_e \simeq 10^{-2}$:
-En estimant $X_e(a_{\text{dec}}) \simeq 10^{-2}$, on obtient
-\[
-        \boxed{R(a_{\text{dec}}) \simeq \frac{520.32}{\zeta(2)}(\Omega_b h^2)^{4/3}}
-\]
+%En estimant $X_e(a_{\text{dec}}) \simeq 10^{-2}$, on obtient
+%\[
+        %R(a_{\text{dec}}) \simeq \frac{520.32}{\zeta(2)}(\Omega_b h^2)^{4/3}
+          %= 2 \left( \frac{\Omega_b h^2}{0.022383} \right)
+%\]
 
 \subsection{Vitesse du son}
 La vitesse du son au découplement est déterminé en terme de sa définition
@@ -463,7 +545,11 @@ l'Univers de commencer à se former sous l'attraction gravitationnelle.
 \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{eta_kj}
-        \caption{}
+        \caption{Rapport de la longueur d'onde de Jeans et de l'horizon cosmique. 
+        Lorsque $\eta k_J < 1$, la matière est stable par rapport au instabilités gravitationnelles. On 
+remarque que $\eta k_J < 1$ pour $a < a_{\text{dec}}$ et $\Omega_b h^2 \lesssim 0.022$ 
+ce qui correspond bien à un Univers stable avant 
+le découplement.}
 \end{figure}
 
 
@@ -518,52 +604,6 @@ avec la taille du jeu de donnée $|\mathcal{D}|$.
 %La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
 %est très sensible à $X_e$. En principe, on doit résoudre l'équation de 
 %Boltzmann pour le processus de recombinaison pour déterminer sa valeur. 
-%Une approximation qui simplifie légèrement notre tâche est d'utiliser 
-%l'équation de Saha (qui cesse d'être valide très peu de temps 
-%avant le moment qui nous intéresse). 
-
-%%Pour résoudre, on doit aussi déterminer $X_e$ en terme du facteur 
-%%d'échelle. Pour ce faire, on doit résoudre l'équation de Boltzmann 
-%%de la réaction de recombinaison $e^{-} + p \longleftrightarrow \gamma + H$. 
-%%Ici, on assume que $n_\gamma = n_\gamma^{(0)}$:
-%%\begin{equation}\label{eq:Boltzmannrecombinaison} 
-        %%a^{-3} \frac{d(n_e a^3)}{dt} = n_e^{(0)}n_p^{(0)} \expval{\sigma v}
-        %%\left\{ \frac{n_H}{n_{H}^{(0)}}  - \frac{n_e^2}{n_e^{(0)} n_p^{(0)}}\right\}
-%%\end{equation} 
-%%On peut simplifier cette expression avec l'équation de Saha 
-%%pour les distributions à l'équilibres:
-%\[
-        %\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}} 
-        %= \left( \frac{m_e T}{2 \pi} \right)^{3/2}
-        %\exp \left\{ -\frac{\text{Ry}}{T} \right\} 
-%\]
-%Selon notre approximation,
-%\[
-        %\frac{n_e^{(0)} n_p^{(0)}}{n_H^{(0)}}
-        %= \frac{X_en_p}{1 - X_e}
-%\]
-%Pour éliminer $n_p$ de l'équation, on utilise $\eta_b \equiv n_b / n_\gamma$:
-%\[
-        %\implies n_p = \eta_b X_e n_\gamma = \eta_b X_e\frac{4 \zeta(3)}{\pi^2}T^3
-%\]
-%On doit donc résoudre
-%\[
-        %\frac{1 - X_e}{X_e^2} = \frac{4 \zeta(3)}{\pi^2}\eta_b \left( \frac{m_e}{2 \pi T} \right)^{-3/2}
-        %\exp \left\{ \frac{\text{Ry}}{T} \right\} \equiv S(\eta_b, T)
-%\]
-%Qui a comme solution physique
-%\[
-        %X_e = \frac{-1 + \sqrt{1 + 4S}}{2S}
-%\]
-%Sachant que la température suit la loi
-%\[
-        %T = T_{\text{CMB}}a^{-1}
-%\]
-%au moment de la recombinaison, on peut donc chercher une solution 
-%à l'équation transcendentale 
-%\[
-        %a_{\text{rec}} = 0.6840\, (\Omega_b h^2)
-%\]
 %où $\text{Ry} = 2 \pi \hbar c R_{\infty } = m_e + m_p - m_h$ 
 %est la constante de Rydberg. Avec $n_h = n_b(1 - X_e)$ on 
 %obtient
