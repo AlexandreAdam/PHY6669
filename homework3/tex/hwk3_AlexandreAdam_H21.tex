@@ -62,7 +62,14 @@ de Fermi-Dirac (on conserve les constantes physiques $c,\, \hbar,\, k_B$ pour ce
 sous-numéro):
 \begin{equation}\label{eq:nelectron} 
         n_{e^\pm}^{(0)} = g_{e^\pm}\int \frac{d^3p}{(2 \pi \hbar)^{3}} 
-        \frac{1}{\exp \left\{ \dfrac{E(p)}{k_B T} \right\} + 1}
+        \frac{1}{\exp \left\{ \dfrac{E(p)}{k_B T} \right\} + 1} 
+        = \left\{ 
+\begin{array}{ll}
+        \dfrac{3 \zeta(3)}{2\pi^2}\left(\dfrac{T}{\hbar c}  \right)^3, & T \gg m_e \\[3ex]
+        \dfrac{2\zeta(3)}{\pi^2}\left( m_e T \right)^{3/2} \exp \left\{ -\dfrac{m_e}{T} \right\}, & T \ll m_e
+        
+\end{array}
+        \right.
 \end{equation} 
 où $E(p) = \sqrt{p^2 c^2 + m_e^2c^4}$ et $g_{e^\pm} = 2$ pour les états de spins. 
 On a négligé le potentiel chimique des électrons $\mu_e$ car il est 
@@ -556,6 +563,8 @@ le découplement.}
 
 
 \section{La vraisemblance}
+
+
 On considère la fonction de vraisemblance Gaussienne:
 \[
         \mathcal{L}(\mathcal{D} \mid w, \sigma_w^2) 
@@ -564,6 +573,57 @@ On considère la fonction de vraisemblance Gaussienne:
 \]
 où $\mathcal{D} = \{d_i \}$ est le jeu de données et $|\mathcal{D}|$ est 
 la taille du jeu de donnée.
+
+\subsection{Dodelson ch.11, Exercice 1}
+En premier lieu, on cherche la distribution \textit{a posteriori} de 
+la déviation standard. Pour rendre les choses simples, on détermine 
+la conditionnelle \textit{a posteriori} $P(\sigma_w \mid \mathcal{D}, \mu)$ 
+au lieu de la distribution marginale. Pour la déviation standard, on 
+utilise une distribution \textit{a priori} uniforme impropre
+\[
+        \pi(\sigma_w) = 1
+\]
+Cette distribution est impropre car elle n'est pas normalisée 
+$\int_{0}^{\infty }\pi(\sigma_w) d\sigma_w = \infty $
+. Toutefois, 
+elle nous permet d'obtenir une relation de proportionnalité pour 
+la distribution \textit{a posteriori} 
+\[
+        P(\sigma_w \mid \mathcal{D}, \mu) \propto_{\sigma_w}
+        \left(\frac{1}{\sigma_w}  \right)^{|\mathcal{D}|} 
+        \exp
+        \left\{ -\frac{1}{2\sigma_w^2}\sum_{i=1}^{|\mathcal{D}|}
+        (d_i - \mu)^{2}\right\}, \hspace{1cm} \sigma_w > 0
+\]
+On trouve une distribution Gamma inverse généralisée
+\[
+        P(x \mid \alpha, \beta, \delta ) = 
+        \frac{\delta \alpha^{\beta}}{\Gamma(\frac{\beta}{\delta })} 
+        \left(\frac{1}{x}\right)^{\beta + 1}
+        \exp \left\{ - \left(\frac{\alpha}{x}\right)^{\delta } \right\}, \hspace{1cm} x > 0
+\]
+avec les paramètres \textit{a posteriori}
+\begin{align*}
+        \alpha &= \sqrt{\frac{1}{2}\sum_{i=1}^{|\mathcal{D}|}(d_i - \mu)} \\
+        \beta &= |\mathcal{D}| - 1 \\
+        \delta &= 2
+\end{align*}
+D'un autre côté, si on choisit plutôt une distribution \textit{a priori} en terme 
+de la variance $\sigma_w^2$
+\[
+        \pi(\sigma_w^2) = 1
+\]
+Alors la distribution \textit{a posteriori} a plutôt une distribution Gamma inverse avec 
+les paramètres
+\begin{align*}
+        \alpha &=  \frac{1}{2}\sum_{i = 1}^{|\mathcal{D}|} (d_i - \mu)^{2} \\
+        \beta &= \frac{|\mathcal{D}|}{2} - 1 \\
+        (\delta &=  1)
+\end{align*}
+Ainsi le choix de la distribution \textit{a priori} a un rôle important sur la forme de la  
+distribution \textit{a posteriori}.
+
+\subsection{Dodelson ch.11, Exercice 2}
 On cherche l'erreur sur la déviation standard $\sigma_w$. On suppose que la 
 fonction de vraisemblance est quadratique autour de la solution MLE. 
 \[

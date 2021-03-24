@@ -15,11 +15,11 @@ pylab.rcParams.update(params)
 
 def n_e_relativistic(T):
     T = T.to(u.eV, equivalencies=u.temperature_energy()) # T can be in Kelvin or eV
-    return (3 * zeta(3) / np.pi**2 * (T / hbar / c)**3).to(1/u.cm**3)
+    return (3 * zeta(3) / 2 / np.pi**2 * (T / hbar / c)**3).to(1/u.cm**3)
 
 def n_e(T): # non-relativistic approximation
     T = T.to(u.eV, equivalencies=u.temperature_energy())
-    return (2 / np.pi**2 *  (m_e * T / hbar**2)**(3/2) * np.exp(-m_e * c**2 / T)).to(1/u.cm**3)
+    return (1 / np.pi**2 *  (m_e * T / hbar**2)**(3/2) * np.exp(-m_e * c**2 / T)).to(1/u.cm**3)
 
 def n_gamma(T):
     T = T.to(u.eV, equivalencies=u.temperature_energy())
@@ -32,7 +32,7 @@ def n_e_general(T):
         if np.sqrt(x**2 + me**2) > 5 * T:
             return x**2 * np.exp(-np.sqrt(x**2 + me**2) / T)
         return x**2 / (np.exp(np.sqrt(x**2 + me**2) / T) + 1)
-    factor =  2 / np.pi**2 * ((u.MeV)**3 / (hbar)**3 / c**3).to(1/u.cm**3).value 
+    factor =  1 / np.pi**2 * ((u.MeV)**3 / (hbar)**3 / c**3).to(1/u.cm**3).value 
     integral = quad(integrand, 0, np.inf)[0]
     return factor * integral
 
@@ -66,6 +66,8 @@ def main(args):
     plt.plot(T, (ne2.value - ne)/ne * 100, "k-.")
     plt.xlabel(r"$k_B$T [MeV]")
     plt.ylabel(r"Erreur relative ($\%$)")
+    plt.xscale("log")
+    plt.axhline(0)
     plt.ylim(-100, 100)
     plt.gca().invert_xaxis()
     plt.savefig("../tex/figures/nucleosynthesis_electron_density.png")
