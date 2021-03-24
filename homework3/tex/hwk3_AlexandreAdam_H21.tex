@@ -620,8 +620,29 @@ les paramètres
         \beta &= \frac{|\mathcal{D}|}{2} - 1 \\
         (\delta &=  1)
 \end{align*}
-Ainsi le choix de la distribution \textit{a priori} a un rôle important sur la forme de la  
-distribution \textit{a posteriori}.
+On obtient deux distributions qui appartiennent à la même famille, mais qui ont une 
+forme différentes.
+
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=0.8\textwidth]{gig_1}
+                \caption{Distribution \textit{a posteriori} avec le choix $\pi(\sigma) = 1$.}
+                \label{fig:gig1}
+        \end{subfigure}
+        ~
+        \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=0.8\textwidth]{gig_2}
+                \caption{Distribution \textit{a posteriori} avec le choix $\pi(\sigma^2) = 1$.}
+                \label{fig:gig2}
+        \end{subfigure}
+        \caption{Comparaison des distributions postérieurs pour un choix différent de distribution \textit{a priori}. 
+        Ce choix influence la forme de la distribution d'une manière prédictible, et nous indique que le choix 
+de la taille de la distribution \textit{a priori} doit prendre en compte le fait que la distribution \textit{a posteriori} 
+de la variance a une queue plus longue dans sa distribution pour un petit jeu de données.}
+\end{figure}
+
+
 
 \subsection{Dodelson ch.11, Exercice 2}
 On cherche l'erreur sur la déviation standard $\sigma_w$. On suppose que la 

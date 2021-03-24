@@ -9,6 +9,7 @@ params = {'legend.fontsize': 'large',
          'xtick.labelsize':'large',
          'ytick.labelsize':'large'}
 pylab.rcParams.update(params)
+plt.style.use("science")
 
 mu = 2
 sigma_true = 1
@@ -27,30 +28,31 @@ def var_gamma(x, n):
     return 2 * alpha**(beta) / gamma(beta) * (1/x)**(beta + 1) * np.exp(-(alpha/x))
 
 def main(args):
-    x = np.linspace(1e-1, 2, 1000)
+    x = np.linspace(1e-1, 4, 1000)
     N = np.arange(5, 100, 10)
     cmap = mpl.cm.get_cmap("jet")
     norm = mpl.colors.Normalize(vmin=N.min(), vmax=N.max())
     mappable = mpl.cm.ScalarMappable(norm, cmap)
-    plt.figure()
-    plt.style.use("science")
+    plt.figure(figsize=(8, 6))
     for n in N:
         plt.plot(x, std_gamma(x, n), "-", color=cmap(norm(n)))
 
-    plt.title(r"$d_i \sim_{\text{i.i.d}} \mathcal{N}(\mu = 2, \sigma = 1)$, $|\mathcal{D}| = 1000$")
-    plt.xlabel(r"$\sigma_w$")
-    plt.ylabel(r"$\text{GIG}(\sigma_w \mid \alpha, \beta, 2)$")
-    plt.colorbar(mappable, label="N observé")
+    plt.title(r"$d_i \sim_{\text{i.i.d}} \mathcal{N}(\mu, \sigma = 1)$")
+    plt.axvline(1, ls="--", color="k")
+    plt.xlabel(r"$\sigma$")
+    plt.ylabel(r"$\text{GIG}(\sigma \mid \alpha, \beta, 2)$")
+    plt.colorbar(mappable, label=r"$|\mathcal{D}|$")
     plt.savefig("../tex/figures/gig_2.png")
 
-    plt.figure()
+    plt.figure(figsize=(8, 6))
     for n in N:
         plt.plot(x, var_gamma(x, n), "-", color=cmap(norm(n)))
 
-    plt.title(r"$d_i \sim_{\text{i.i.d}} \mathcal{N}(\mu = 2, \sigma^2 = 1)$, $|\mathcal{D}| = 1000$")
-    plt.xlabel(r"$\sigma_w^2$")
-    plt.ylabel(r"$\text{GIG}(\sigma_wi^2 \mid \alpha, \beta, 1)$")
-    plt.colorbar(mappable, label="N observé")
+    plt.title(r"$d_i \sim_{\text{i.i.d}} \mathcal{N}(\mu, \sigma^2 = 1)$")
+    plt.xlabel(r"$\sigma^2$")
+    plt.axvline(1, ls="--", color="k")
+    plt.ylabel(r"$\text{GIG}(\sigma^2 \mid \alpha, \beta, 1)$")
+    plt.colorbar(mappable, label=r"$|\mathcal{D}|$")
     plt.savefig("../tex/figures/gig_1.png")
 
     plt.show()
