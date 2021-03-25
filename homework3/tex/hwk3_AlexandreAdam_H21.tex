@@ -72,6 +72,18 @@ sous-numéro):
         \right.
 \end{equation} 
 où $E(p) = \sqrt{p^2 c^2 + m_e^2c^4}$ et $g_{e^\pm} = 2$ pour les états de spins. 
+Similairement, la densité énergétique est
+\begin{equation}\label{eq:nelectron} 
+        \rho_{e^\pm}^{(0)} = g_{e^\pm}\int \frac{d^3p}{(2 \pi \hbar)^{3}} 
+        \frac{E(p)}{\exp \left\{ \dfrac{E(p)}{k_B T} \right\} + 1} 
+\end{equation} 
+        %= \left\{ 
+%\begin{array}{ll}
+        %\dfrac{3 \zeta(3)}{2\pi^2}\left(\dfrac{T}{\hbar c}  \right)^3, & T \gg m_e \\[3ex]
+        %\dfrac{2\zeta(3)}{\pi^2}\left( m_e T \right)^{3/2} \exp \left\{ -\dfrac{m_e}{T} \right\}, & T \ll m_e
+        
+%\end{array}
+        %\right.
 On a négligé le potentiel chimique des électrons $\mu_e$ car il est 
 identiquement nul avant et durant la nucléosynthèse.
 %dû à notre supposition que 
@@ -90,8 +102,8 @@ $m_e \simeq 0.5\, \text{MeV}/c^2$ est similaire à la température.
         \end{subfigure}
         ~
         \begin{subfigure}[t]{0.45\textwidth}
-                \includegraphics[width=\textwidth]{resultat_ratio_ne_ngamma}
-                \caption{Ratio des densités numérique des électrons-positrons 
+                \includegraphics[width=\textwidth]{resultat_ratio_rho_ngamma}
+                \caption{Ratio des densités énergétiques des électrons-positrons 
                 lors de l'époque de nucléosynthèse.}
                 \label{fig:Res1}
         \end{subfigure}
@@ -108,8 +120,13 @@ Avec substition on retrouve une forme standard pour l'intégrale qui devient
         n_\gamma^{(0)} = \frac{2\zeta(3 )}{\pi^2} \left( \frac{k_B T}{\hbar c} \right)^{3}
 \]
 où $\zeta(s)$ est la fonction zeta de Riemann.
-On cherche la température $T^\star$ à partir de laquelle la densité numérique des électrons 
-devient $1\%$ celle des photons $n_\gamma^{(0)}$. En interpolant une grille de valeurs, 
+La densité énergétique suit de la loi de Stefan-Boltzmann
+\[
+        \rho_\gamma^{(0)} = \frac{\hbar c\pi^2}{15} \left( \frac{k_B T}{\hbar c} \right)^{4}
+\]
+On cherche la température $T^\star$ à partir de laquelle la densité énergétique
+des électrons 
+devient $1\%$ celle des photons $\rho_\gamma^{(0)}$. En interpolant une grille de valeurs, 
 on obtient
 \[
         \boxed{k_BT^\star = 0.06\, \text{MeV}}
@@ -536,24 +553,40 @@ Le nombre d'onde de Jeans dans les coordonnées comobiles est
 et décrit la taille minimale d'un objet de densité de matière $\rho_b$ 
 pour l'instabilité de Jeans (effondrement gravitationnel). 
 On s'intéresse à la période avant le découplement, donc 
-$a < a_{\text{dec}}$. À ce moment, l'Univers est dominé par 
-la radiation donc ($a(t=0) = 0$):
+$a \lesssim a_{\text{dec}}$. À cette époque, la radiation 
+et la matière contribue de façon similaire à l'expansion, ainsi 
 \[
-        \dot{a} = H_0 \Omega_r^{1/2}a^{-1} \implies 
-        a(t) = \left( 2H_0\Omega_r^{1/2} t \right)^{1/2}
+        \dot{a} = H_0 \sqrt{\Omega_r a^{-2} + \Omega_m a^{-1} } 
 \]
 Donc, l'horizon est
 \[
-        \eta(t) = \int_{0}^{t} \frac{dt'}{a(t')} 
-        = \sqrt{\frac{t}{2H_0\Omega_r^{1/2}}} = \frac{a}{2H_0 \Omega_r^{1/2}}
+        \eta(a) = \int_{0}^{t} \frac{dt'}{a(t')} 
+        = \frac{1}{H_0}\int_0^{a}\frac{da'}{\sqrt{\Omega_r + \Omega_m a'}}
+        = \frac{2\Omega_m}{H_0} \sqrt{\Omega_r + \Omega_m a}
 \]
-Malgré le fait que $k_J$ diminue en fonction de $a$, l'accélération 
-de l'expansion de l'Univers fait en sorte que $\eta k_J \rightarrow 1$ 
-environ au moment du découplement, ce qui permet au large structure de 
-l'Univers de commencer à se former sous l'attraction gravitationnelle.
+Avec les résultats de Planck on a
+\[
+        \Omega_r = 2.47\times 10^{-5}, \hspace{1cm} \Omega_m = 0.31
+\]
+
+%À ce moment, l'Univers est dominé par 
+%la radiation donc ($a(t=0) = 0$):
+%\[
+        %\dot{a} = H_0 \Omega_r^{1/2}a^{-1} \implies 
+        %a(t) = \left( 2H_0\Omega_r^{1/2} t \right)^{1/2}
+%\]
+%Donc, l'horizon est
+%\[
+        %\eta(t) = \int_{0}^{t} \frac{dt'}{a(t')} 
+        %= \sqrt{\frac{t}{2H_0\Omega_r^{1/2}}} = \frac{a}{2H_0 \Omega_r^{1/2}}
+%\]
+%Malgré le fait que $k_J$ diminue en fonction de $a$, l'accélération 
+%de l'expansion de l'Univers fait en sorte que $\eta k_J \rightarrow 1$ 
+%environ au moment du découplement, ce qui permet au large structure de 
+%l'Univers de commencer à se former sous l'attraction gravitationnelle.
 \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{eta_kj}
+        \includegraphics[width=0.5\textwidth]{eta_kj}
         \caption{Rapport de la longueur d'onde de Jeans et de l'horizon cosmique. 
         Lorsque $\eta k_J < 1$, la matière est stable par rapport au instabilités gravitationnelles. On 
 remarque que $\eta k_J < 1$ pour $a < a_{\text{dec}}$ et $\Omega_b h^2 \lesssim 0.022$ 
@@ -567,9 +600,9 @@ le découplement.}
 
 On considère la fonction de vraisemblance Gaussienne:
 \[
-        \mathcal{L}(\mathcal{D} \mid w, \sigma_w^2) 
-        = \frac{1}{(2 \pi \sigma_w^2)^{|\mathcal{D}|/2}}
-        \exp \left\{ -\sum_{i=1}^{|\mathcal{D}|}\frac{(d_i - w)^{2} }{2 \sigma_w^2} \right\}
+        \mathcal{L}(\mathcal{D} \mid \mu, \sigma^2) 
+        = \frac{1}{(2 \pi \sigma^2)^{|\mathcal{D}|/2}}
+        \exp \left\{ -\sum_{i=1}^{|\mathcal{D}|}\frac{(d_i - \mu)^{2} }{2 \sigma^2} \right\}
 \]
 où $\mathcal{D} = \{d_i \}$ est le jeu de données et $|\mathcal{D}|$ est 
 la taille du jeu de donnée.
@@ -581,21 +614,28 @@ la conditionnelle \textit{a posteriori} $P(\sigma_w \mid \mathcal{D}, \mu)$
 au lieu de la distribution marginale. Pour la déviation standard, on 
 utilise une distribution \textit{a priori} uniforme impropre
 \[
-        \pi(\sigma_w) = 1
+        \pi(\sigma) = 
+        \left\{ 
+\begin{matrix}
+        1 & \sigma > 0 \\
+        0 & \text{autrement}
+\end{matrix}
+        \right.
 \]
 Cette distribution est impropre car elle n'est pas normalisée 
-$\int_{0}^{\infty }\pi(\sigma_w) d\sigma_w = \infty $
+$\int_{0}^{\infty }\pi(\sigma) d\sigma = \infty $
 . Toutefois, 
 elle nous permet d'obtenir une relation de proportionnalité pour 
 la distribution \textit{a posteriori} 
 \[
-        P(\sigma_w \mid \mathcal{D}, \mu) \propto_{\sigma_w}
-        \left(\frac{1}{\sigma_w}  \right)^{|\mathcal{D}|} 
+        P(\sigma \mid \mathcal{D}, \mu) \propto
+        \left(\frac{1}{\sigma}  \right)^{|\mathcal{D}|} 
         \exp
-        \left\{ -\frac{1}{2\sigma_w^2}\sum_{i=1}^{|\mathcal{D}|}
-        (d_i - \mu)^{2}\right\}, \hspace{1cm} \sigma_w > 0
+        \left\{ -\frac{1}{2\sigma^2}\sum_{i=1}^{|\mathcal{D}|}
+        (d_i - \mu)^{2}\right\}, \hspace{1cm} \sigma > 0
 \]
-On trouve une distribution Gamma inverse généralisée
+On trouve que la distribution \textit{a posteriori} de $\sigma$ suit 
+une distribution Gamma inverse généralisée
 \[
         P(x \mid \alpha, \beta, \delta ) = 
         \frac{\delta \alpha^{\beta}}{\Gamma(\frac{\beta}{\delta })} 
@@ -609,9 +649,15 @@ avec les paramètres \textit{a posteriori}
         \delta &= 2
 \end{align*}
 D'un autre côté, si on choisit plutôt une distribution \textit{a priori} en terme 
-de la variance $\sigma_w^2$
+de la variance $\sigma^2$
 \[
-        \pi(\sigma_w^2) = 1
+        \pi(\sigma^2) = 
+        \left\{ 
+\begin{matrix}
+        1 & \sigma^2 > 0 \\
+        0 & \text{autrement}
+\end{matrix}
+        \right.
 \]
 Alors la distribution \textit{a posteriori} a plutôt une distribution Gamma inverse avec 
 les paramètres
@@ -648,23 +694,23 @@ de la variance a une queue plus longue dans sa distribution pour un petit jeu de
 On cherche l'erreur sur la déviation standard $\sigma_w$. On suppose que la 
 fonction de vraisemblance est quadratique autour de la solution MLE. 
 \[
-        \ln \mathcal{L}(\mathcal{\mathcal{D}} \mid \sigma_w, w=\bar{w}) \simeq 
-        \ln \mathcal{L}(\mathcal{D} \mid \bar{\sigma}_w, \bar{w}) 
-        + \frac{1}{2}\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma_w^2} 
-        \bigg|_{\sigma_w=\bar{\sigma}_w} (\sigma_w - \bar{\sigma}_w)^{2}
+        \ln \mathcal{L}(\mathcal{\mathcal{D}} \mid \sigma, \mu = \bar{\mu}) \simeq 
+        \ln \mathcal{L}(\mathcal{D} \mid \bar{\sigma}, \bar{\mu}) 
+        + \frac{1}{2}\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma^2} 
+        \bigg|_{\sigma=\bar{\sigma}} (\sigma - \bar{\sigma})^{2}
 \]
 En effet, on sait que
 \[
-        \frac{\partial \ln \mathcal{L}}{\partial \sigma_w}\bigg|_{\text{MLE}} = 
-        \frac{1}{\bar{\sigma}_w^{3}}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2} - 
-        \frac{|\mathcal{D}|}{\bar{\sigma}_w} = 0
+        \frac{\partial \ln \mathcal{L}}{\partial \sigma}\bigg|_{\text{MLE}} = 
+        \frac{1}{\bar{\sigma}^{3}}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{\mu})^{2} - 
+        \frac{|\mathcal{D}|}{\bar{\sigma}} = 0
 \]
 D'où on avait trouvé la solution MLE pour la variance
 \[
-        \bar{\sigma}^2_w = 
-        \frac{1}{|\mathcal{D}|}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}
+        \bar{\sigma}^2 = 
+        \frac{1}{|\mathcal{D}|}\sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{\mu})^{2}
 \]
-Où $\bar{w}$ est la solution attendu pour le signal $w$ (moyenne). L'erreur 
+Où $\bar{\mu}$ est la solution attendu pour la moyenne. L'erreur 
 sur la déviation standard est 2 fois l'inverse du 
 coefficient de deuxième ordre dans 
 l'expansion de Taylor de la vraisemblance autour de son maximum global (
@@ -672,73 +718,17 @@ définition de FHWM):
 \begingroup
 \allowdisplaybreaks
 \begin{align*}
-        \sigma_{\sigma_w}^{-1} &= -\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma_w^2}
+        \text{Var}(\sigma)^{-1} &= -\frac{\partial^2 \ln \mathcal{L}}{\partial \sigma^2}
         \bigg|_{\text{MLE}} \\
-                          &= \frac{3}{\bar{\sigma}_w^4}\sum_{i=1}^{|\mathcal{D}|}
-        (d_i - \bar{w})^{2} - \frac{|\mathcal{D}|}{\bar{\sigma}_w^{2}} \\
+                          &= \frac{3}{\bar{\sigma}^4}\sum_{i=1}^{|\mathcal{D}|}
+        (d_i - \bar{\mu})^{2} - \frac{|\mathcal{D}|}{\bar{\sigma}^{2}} \\
                           &= \frac{2|\mathcal{D}|^2}{
-                          \displaystyle \sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{w})^{2}} \\
-        \implies \Aboxed{  \sigma_{\sigma_w}  &= \frac{1}{2|\mathcal{D}|^{2}}
-        \sum_{i = 1}^{|\mathcal{D}|}(d_i -\bar{w})^{2} = \frac{\bar{\sigma}_w}{2|\mathcal{D}|}}
+                          \displaystyle \sum_{i=1}^{|\mathcal{D}|}(d_i - \bar{\mu})^{2}} \\
+        \implies \Aboxed{  \text{Var}(\sigma)  &= \frac{1}{2|\mathcal{D}|^{2}}
+        \sum_{i = 1}^{|\mathcal{D}|}(d_i -\bar{\mu})^{2} = \frac{\bar{\sigma}^2}{2|\mathcal{D}|}}
 \end{align*}
 \endgroup
-Donc l'incertitude sur la déviation standard diminue très rapidement 
-avec la taille du jeu de donnée $|\mathcal{D}|$.
 
-
-
-
-%La valeur de $a_{\text{rec}}$ (et particulièrement de $z_{\text{rec}}$) 
-%est très sensible à $X_e$. En principe, on doit résoudre l'équation de 
-%Boltzmann pour le processus de recombinaison pour déterminer sa valeur. 
-%où $\text{Ry} = 2 \pi \hbar c R_{\infty } = m_e + m_p - m_h$ 
-%est la constante de Rydberg. Avec $n_h = n_b(1 - X_e)$ on 
-%obtient
-%\[
-        %a^{-3} \frac{d(n_e a^3)}{dt} =  (1 - X_e)n_b\beta  - X_e^2n_b^2\alpha^{(2)}
-%\]
-%où $\beta$ est le taux d'ionisation (on réintroduit les unités physiques)
-%\[
-        %\beta \equiv 
-        %\alpha^{(2)} c\left( \frac{m_e k_B T}{2 \pi \hbar^{2}} \right)^{3/2}
-        %\exp \left\{ -\frac{\text{Ry}}{k_B T} \right\}
-%\]
-%et $\alpha^{(2)} = \expval{\sigma v}$ est la section efficace thermalisée 
-%excluant 
-%le niveau fondamental $n = 1$ puisque le photon de recombinaison
-%de cet état état va ioniser immédiatement un atome $H$ voisin. 
-%On omet le détail de ce calcul et on se réfère à l'équation (3.42)
-%de Dodelson pour une approximation de cette section efficace
-%\[
-        %\alpha^{(2)} = 9.78 \frac{\hbar^2\alpha^{2}}{m_e^2c^2} 
-        %\left( \frac{\text{Ry}}{k_BT}  \right)^{1/2}
-        %\ln \left( \frac{\text{Ry}}{k_BT} \right)
-%\]
-%Sachant qu'au moment de la recombinaison, la température de la 
-%matière est approximativement la même que la température des 
-%photons à cause des processus de diffusion, on a
-%\[
-        %T = T_{\text{CMB}}a^{-1} = 2.725\,48\, a^{-1}\,\,\text{K}
-%\]
-%On a donc des expressions en terme du facteur d'échelle pour 
-%la plupart des quantités d'intérêt. On revient à l'équation de 
-%Boltzmann pour changer la variable d'intégration et simplifier le 
-%côté gauche. En effet, on réalise que $n_e a^3 \simeq X_e n_b a^3$. 
-%D'où
-%\[
-        %\frac{dX_e}{dt} =  (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)
-%\]
-%On utilise la seconde équation de Friedmann pour une expression 
-%de $dt$ dans le régime matière-radiation qui nous intéresse:
-%\[
-        %dt = \frac{da}{H_0 \sqrt{\Omega_0 a^{-2} + \Omega_m a^{-1}}}
-%\]
-%d'où l'équation différentielle
-%\[
-        %\frac{dX_e}{da} = (100\, \text{km}\,\text{s}^{-1}\, \text{Mpc}^{-1})^{-1}
-        %\frac{ (1 - X_e(a))\beta(a)  - X_e^2(a)n_b\alpha^{(2)}(a)}{
-        %h\sqrt{\Omega_r a^{-2} + \Omega_m a^{-1}}}
-%\]
 
 
 

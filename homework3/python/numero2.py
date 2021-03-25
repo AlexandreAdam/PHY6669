@@ -4,6 +4,7 @@ import astropy.units as u
 from astropy.constants import m_p, m_e, k_B, c, G, sigma_T, hbar, Ryd as Ry
 from scipy.special import zeta
 from scipy.optimize import bisect
+from scipy.integrate import quad
 import matplotlib.pylab as pylab
 import matplotlib as mpl
 params = {'legend.fontsize': 'large',
@@ -44,6 +45,16 @@ def a_dec_saha_solution():
     # print(res)
     print(f"X_e(a_dec) = {Saha_solution(a_dec, eta_b):.2e}")
     return 1/a_dec - 1
+
+
+@np.vectorize
+def horizon(a):
+    factor = (c/H_0).to(u.Mpc).value
+    def integrand(_a):
+        return 1/np.sqrt(Omega_r + Omega_m * a)
+    out  = quad(integrand, 0, a)[0]
+    return factor * out
+    
 
 def main(args):
     rho_crit = (3 * H_0**2 / 8 / np.pi / G * c / hbar).to(1/u.cm**4)
@@ -101,13 +112,13 @@ def main(args):
         plt.xlabel(r"$\Omega_b h^2$")
         plt.savefig("../tex/figures/speed_of_sound.png")
 
-        a = np.logspace(np.log10(a_rec/100), np.log10(a_rec*1.2), 400)[np.newaxis, :]
+        a = np.logspace(np.log10(a_rec/100), -2, 400)[np.newaxis, :]
         x = x[:, np.newaxis]
         rho_b = lambda a, omega_b_h: rho_crit_phys * omega_b_h * a**(-3)
         R = lambda a, omega_b_h: R_factor / zeta(2) * omega_b_h * a
         c_s = lambda a, omega_b_h: c**2/(3 * (1 + R(a, omega_b_h)))
         k_J = np.sqrt(4 * np.pi * G * rho_b(a, x) * a**2 / c_s(a, x)).to(1/u.Mpc)
-        horizon = (c * a / (2 * H_0 * Omega_r**(1/2))).to(u.Mpc)
+        eta = horizon(a)
 
         plt.figure(figsize=(8, 6))
         plt.style.use("science")
@@ -125,7 +136,7 @@ def main(args):
 
         plt.figure(figsize=(8, 6))
         for i, _x in enumerate(x):
-            plt.plot(a[0], horizon[0]* k_J[i, :], color=cmap(norm(_x))[0])
+            plt.plot(a[0], eta[0]* k_J[i, :], color=cmap(norm(_x))[0])
 
         plt.xscale("log")
         plt.colorbar(mappable, label=r"$\Omega_b h^2$")
@@ -134,6 +145,8 @@ def main(args):
         plt.yscale("log")
         plt.axhline(1, ls="--", color="k")
         plt.axvline(1/(1 + z_rec_true), ls="--", color="k")
+        plt.annotate("Stable", (2.5e-5, 0.8))
+        plt.annotate("Instable", (2.5e-5, 1.1))
         plt.annotate(r"$a_{\text{dec}}$", (0.75/(1 + z_rec_true), 0.05), rotation=90, fontsize=15)
         plt.xlim(a.min(), a.max())
         plt.savefig("../tex/figures/eta_kj.png")
