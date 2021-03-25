@@ -431,9 +431,8 @@ Ainsi,
         X_e \Omega_b a_{\text{dec}}^{-3/2}
 \]
 d'où
-\begin{equation}\label{eq:a_dec} 
+\begin{equation}\label{eq:adec} 
         a_{\text{dec}} = 
-        %0.6840\, (\Omega_b h^2X^2_e(a_{\text{dec}}))^{1/3}
         \left( \frac{\rho_{\text{cr}} \sigma_T}{m_p H_0 \Omega_m^{1/2}} \right)^{2/3}
         \Omega_b^{2/3}(X_e(a_{\text{dec}}))^{2/3}
 \end{equation} 
@@ -477,7 +476,7 @@ et que la fraction de baryons sur photons est mesurée à
 \[
         \eta_b = 6.155\times 10^{-10} \left( \frac{\Omega_b h^2}{0.022383} \right)
 \]
-on peut finalement résoudre l'équation \ref{eq:a_dec} en utilisant la 
+on peut finalement résoudre l'équation \ref{eq:adec} en utilisant la 
 méthode numérique de bissection et les paramètres cosmologiques 
 \[
         \Omega_b = 0.048;\,\,\, \Omega_m = 0.31;\,\,\,h=0.68
@@ -562,7 +561,7 @@ Donc, l'horizon est
 \[
         \eta(a) = \int_{0}^{t} \frac{dt'}{a(t')} 
         = \frac{1}{H_0}\int_0^{a}\frac{da'}{\sqrt{\Omega_r + \Omega_m a'}}
-        = \frac{2\Omega_m}{H_0} \sqrt{\Omega_r + \Omega_m a}
+        = \frac{2}{\Omega_m H_0} \sqrt{\Omega_r + \Omega_m a}
 \]
 Avec les résultats de Planck on a
 \[
