@@ -108,14 +108,14 @@ $m_e \simeq 0.5\, \text{MeV}/c^2$ est similaire à la température.
                 \label{fig:Res1}
         \end{subfigure}
 \end{figure}
-La densité numérique des photons se calcule directment à partir de la distribution 
+La densité numérique des photons se calcule directement à partir de la distribution 
 de Planck
 \begin{equation}\label{eq:PlanckDensity} 
         n_\gamma^{(0)} = \int_0^{\infty}\frac{B(\nu, T) d\nu}{h\nu} = 
         \frac{8 \pi }{c^3}  \int_0^{\infty } 
         \frac{\nu^2 d\nu}{\exp \left\{ h\nu / k_B T \right\} - 1}
 \end{equation} 
-Avec substition on retrouve une forme standard pour l'intégrale qui devient
+Avec substitution on retrouve une forme standard pour l'intégrale qui devient
 \[
         n_\gamma^{(0)} = \frac{2\zeta(3 )}{\pi^2} \left( \frac{k_B T}{\hbar c} \right)^{3}
 \]
@@ -136,16 +136,15 @@ Avec un ratio de baryons sur photons de
 \[
         \eta_b = 6 \times 10^{-10}
 \]
-au moment de la nucléosynthèse (après annihilation des anti-particules), on peut 
+au moment de la nucléosynthèse (après annihilation des antiparticules), on peut 
 tenter de déterminer le moment (la température) à partir duquel les électrons 
-ne seront plus en équilibre avec le processus de création/annihiltion de paires. En 
+ne seront plus en équilibre avec le processus de création/annihilation de paires. En 
 effet, l'Univers observé est électriquement neutre et on doit avoir $n_{e^{-}} = n_p$ 
 à un certains moment. Si on suppose que la grande majorité de la matière baryonique 
 est constitué de protons (on néglige les neutrons), alors on trouve
 \[
         \boxed{k_B T( \frac{n_{e^{-}}}{n_\gamma} \sim \eta_b) \simeq 0.02\, \text{MeV}}
 \]
-
 \subsection{Dodelson ch. 3, Exercice 3}
 \subsubsection{Intégrale sur les particules massives}
 On cherche à calculer le taux de la conversion de neutrons en protons $\Gamma_{np}$.
@@ -484,14 +483,14 @@ méthode numérique de bissection et les paramètres cosmologiques
 On obtient $X_e(a_{\text{dec}}) = 6.56\times 10^{-3}$, $T_{\text{dec}} = 0.2636\,\,\text{eV}$ 
 et le facteur d'échelle 
 obtenu correspond 
-au redshift $z_{\text{dec}} \simeq 1121$. Notons que la fraction d'ionization 
+au redshift $z_{\text{dec}} \simeq 1121$. Notons que la fraction d'ionisation 
 elle-même ne dépend que faiblement des paramètres cosmologiques. La température $T_{\text{dec}}$
 joue un rôle beaucoup plus important à cause du facteur exponentiel. 
 La réponse est comparable à
 $z_{\text{dec}} = 1090$ annoncé. Toutefois, ce résultat plus précis 
 requiert d'intégrer l'équation de 
 Boltzmann et de considérer la contribution de $\Omega_r$ 
-dans le facteur de Hubble. Ainsi, avec l'approxmation de Saha on obtient
+dans le facteur de Hubble. Ainsi, avec l'approximation de Saha on obtient
 \[
         \boxed{R^{\text{Saha}}(a_{\text{dec}}) = 1.328 \left( \frac{\Omega_b h^2}{0.022383} \right)}
 \]
@@ -511,8 +510,8 @@ La vitesse du son au découplement est déterminé en terme de sa définition
 \[
         c_s^2 \equiv \frac{\partial P}{\partial \rho}\bigg|_{S}
 \]
-où l'entropie est guardée constante. Comme la pression du fluide 
-baryons-photons est dominées par la pression des photons:
+où l'entropie est gardée constante. Comme la pression du fluide 
+baryons photons est dominée par la pression des photons:
 \[
         P \simeq P_\gamma = \frac{1}{3}\rho_\gamma
 \]
@@ -561,7 +560,7 @@ Donc, l'horizon est
 \[
         \eta(a) = \int_{0}^{t} \frac{dt'}{a(t')} 
         = \frac{1}{H_0}\int_0^{a}\frac{da'}{\sqrt{\Omega_r + \Omega_m a'}}
-        = \frac{2}{\Omega_m H_0} \sqrt{\Omega_r + \Omega_m a}
+        = \frac{2}{\Omega_m H_0} (\sqrt{\Omega_r + \Omega_m a} - \sqrt{\Omega_r})
 \]
 Avec les résultats de Planck on a
 \[
@@ -627,11 +626,64 @@ $\int_{0}^{\infty }\pi(\sigma) d\sigma = \infty $
 elle nous permet d'obtenir une relation de proportionnalité pour 
 la distribution \textit{a posteriori} 
 \[
-        P(\sigma \mid \mathcal{D}, \mu) \propto
-        \left(\frac{1}{\sigma}  \right)^{|\mathcal{D}|} 
+        P(\sigma \mid \mathcal{D}, \mu) = \frac{1}{\displaystyle \int_0^{\infty }P(\sigma)d\sigma}
+        \left(\frac{1}{\sqrt{2\pi}\sigma}  \right)^{|\mathcal{D}|} 
         \exp
         \left\{ -\frac{1}{2\sigma^2}\sum_{i=1}^{|\mathcal{D}|}
         (d_i - \mu)^{2}\right\}, \hspace{1cm} \sigma > 0
+\]
+Avec un changement de variable, on peut déterminer la 
+constante de normalisation
+\[
+        \int_0^{\infty }P(\sigma)d\sigma = 
+        \left(\frac{1}{\sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \int_0^{\infty} \left( \frac{1}{\sigma} \right)^{|\mathcal{D}|}
+        \exp \bigg\{ -\frac{1}{\sigma^2}\overbrace{\frac{1}{2}\sum_{i=1}^{|\mathcal{D}|}(d_i - \mu)^{2}}^{\equiv \alpha^2} \bigg\}
+        d\sigma
+\]
+On pose $x \equiv \alpha^2\sigma^{-2} \implies dx = -2\alpha^2 \sigma^{-3}d\sigma \implies d\sigma = -\dfrac{dx}{2\alpha^2 x^{3/2}}$:
+\begin{align*}
+        \int_0^{\infty }P(\sigma)d\sigma &= 
+        \frac{1}{2\alpha^{|\mathcal{D}| - 1}}\left(\frac{1}{ \sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \int_0^{\infty} x^{|\mathcal{D}|/2}
+        \exp \left\{ - x \right\}
+        \frac{dx}{x^{3/2}} \\
+        &=
+        \frac{1}{2\alpha^{|\mathcal{D}| - 1}}\left(\frac{1}{\sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \Gamma \left(\frac{|\mathcal{D}| - 1}{2}\right)
+\end{align*}
+D'où la distribution \textit{a posteriori}
+\[
+        \boxed{P(\sigma \mid \mathcal{D}, \mu) = \frac{2\alpha^{|\mathcal{D}| - 1}}{\Gamma \left( \dfrac{\mathcal{D} - 1}{2} \right)}
+        \left( \frac{1}{\sigma} \right)^{|\mathcal{D}|}
+\exp \left\{ - \left( \frac{\alpha}{\sigma} \right)^{2} \right\}}
+\]
+D'un autre côté, pour $\pi(\sigma^2) = 1$, on a (en posant $\alpha^2 \rightarrow \alpha$) 
+\[
+        \int_0^{\infty }P(\sigma^2)d\sigma^2 = 
+        \left(\frac{1}{\sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \int_0^{\infty} \left( \frac{1}{\sigma^2} \right)^{|\mathcal{D}|/2}
+        \exp \bigg\{ -\frac{\alpha}{\sigma^2} \bigg\}
+        d\sigma^2
+\]
+En posant $x \equiv \alpha/\sigma^2 \implies dx = -\alpha d\sigma^2/\sigma^4 \implies d\sigma^2 = -\alpha dx / x^2$:
+\begin{align*}
+        \int_0^{\infty }P(\sigma^2)d\sigma^2 &= 
+        \frac{1}{\alpha^{|\mathcal{D}|/2}}\left(\frac{1}{\sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \int_0^{\infty}  x^{|\mathcal{D}|/2}
+        \exp \left\{ -x \right\}
+        \frac{\alpha dx}{x^2}\\
+        &=
+        \frac{1}{\alpha^{|\mathcal{D}|/2 - 1}}\left(\frac{1}{\sqrt{2\pi}}  \right)^{|\mathcal{D}|}   
+        \Gamma \left( \frac{|\mathcal{D}|}{2} - 1 \right)
+\end{align*}
+Donc
+\[
+        \boxed{P(\sigma^2 \mid \mathcal{D}, \mu) = 
+        \frac{\alpha^{|\mathcal{D}|/2 - 1}}{\Gamma \left( \dfrac{|\mathcal{D}|}{2} - 1 \right)}
+        \left( \frac{1}{\sigma^2} \right)^{|\mathcal{D}|/2}
+        \exp \left\{ - \frac{\alpha}{\sigma^2} \right\}
+}
 \]
 On trouve que la distribution \textit{a posteriori} de $\sigma$ suit 
 une distribution Gamma inverse généralisée
